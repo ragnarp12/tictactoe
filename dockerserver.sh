@@ -12,4 +12,4 @@ echo Pull docker image
 docker pull ragnarp12/tictactoe
 
 echo Run docker image
-docker run -p 80:8080 -d -e "NODE_ENV=production" -name=tictactoe ragnarp12/tictactoe
+docker run -p 80:8080 -d -e "NODE_ENV=production" --name=tictactoe ragnarp12/tictactoe

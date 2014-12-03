@@ -30,7 +30,7 @@ describe('create game command', function() {
     ];
 
     var actualEvents = tictactoe(given).executeCommand(when);
-    should(actualEvents.length).be.exactly(1);
+    should(actualEvents.length).be.exactly(2);
 
     should(JSON.stringify(actualEvents)).be.exactly(JSON.stringify(then));
   })

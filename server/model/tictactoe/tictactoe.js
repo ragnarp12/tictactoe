@@ -9,13 +9,20 @@ module.exports = function(history) {
 
             var cmdHandlers = {
                 "CreateGame": function(cmd) {
-                    //console.log("Game created by ", currentPlayer);
-                    return [{
-                        event: "GameCreated",
+                    if (!cmd.user.userName) {
+                      return [{
+                        event: "NoUserName",
                         user: cmd.user,
                         name: cmd.name,
                         timeStamp: cmd.timeStamp
-                    }]
+                      }];
+                    } else
+                        return [{
+                            event: "GameCreated",
+                            user: cmd.user,
+                            name: cmd.name,
+                            timeStamp: cmd.timeStamp
+                        }]
                 },
                 "MovePlayer": function(cmd) {
                     if (!gameState.isGameCreated()) {
@@ -33,8 +40,8 @@ module.exports = function(history) {
                             name: cmd.name,
                             timeStamp: cmd.timeStamp
                         }]
-                    } 
-                    if(gameState.currentPlayer().userName !== cmd.user.userName) {
+                    }
+                    if (gameState.currentPlayer().userName !== cmd.user.userName) {
                         return [{
                             event: "MovePlayerAttempted",
                             user: cmd.user,

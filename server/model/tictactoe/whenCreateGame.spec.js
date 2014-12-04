@@ -27,7 +27,7 @@ describe('create game command', function() {
         }];
 
         var actualEvents = tictactoe(given).executeCommand(when);
-        should(JSON.stringify(actualEvents)).be.exactly(JSON.stringify(then));
+        should(actualEvents).eql(then);
     });
 
     it('should emit no game name in game event', function() {
@@ -52,7 +52,7 @@ describe('create game command', function() {
         }];
 
         var actualEvents = tictactoe(given).executeCommand(when);
-        should(JSON.stringify(actualEvents)).be.exactly(JSON.stringify(then));
+        should(actualEvents).eql(then);
     });
 
     it('should emit game created event', function() {
@@ -78,9 +78,19 @@ describe('create game command', function() {
         var actualEvents = tictactoe(given).executeCommand(when);
         should(actualEvents.length).be.exactly(1);
 
-        should(JSON.stringify(actualEvents)).be.exactly(JSON.stringify(then));
+        should(actualEvents).eql(then);
     })
 
 
 
 });
+
+/*
+
+it('should emit player moved event', function() {
+
+        var actualEvents = tictactoe(given).executeCommand(when);
+        should(actualEvents).eql(then);
+    });
+
+ */

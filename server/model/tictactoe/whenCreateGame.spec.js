@@ -18,7 +18,7 @@ describe('create game command', function() {
         };
 
         var then = [{
-            event: "NoUserName",
+            event: "GameNoUserName",
             user: {
                 userName: ""
             },

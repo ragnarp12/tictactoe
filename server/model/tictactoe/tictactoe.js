@@ -11,7 +11,7 @@ module.exports = function(history) {
                 "CreateGame": function(cmd) {
                     if (!cmd.user.userName) {
                       return [{
-                        event: "NoUserName",
+                        event: "GameNoUserName",
                         user: cmd.user,
                         name: cmd.name,
                         timeStamp: cmd.timeStamp

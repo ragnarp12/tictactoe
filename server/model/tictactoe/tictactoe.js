@@ -10,12 +10,19 @@ module.exports = function(history) {
             var cmdHandlers = {
                 "CreateGame": function(cmd) {
                     if (!cmd.user.userName) {
-                      return [{
-                        event: "GameNoUserName",
-                        user: cmd.user,
-                        name: cmd.name,
-                        timeStamp: cmd.timeStamp
-                      }];
+                        return [{
+                            event: "GameNoUserName",
+                            user: cmd.user,
+                            name: cmd.name,
+                            timeStamp: cmd.timeStamp
+                        }];
+                    } else if (!cmd.name) {
+                        return [{
+                            event: "GameNoName",
+                            user: cmd.user,
+                            name: cmd.name,
+                            timeStamp: cmd.timeStamp
+                        }];
                     } else
                         return [{
                             event: "GameCreated",

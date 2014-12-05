@@ -55,6 +55,31 @@ describe('create game command', function() {
         should(actualEvents).eql(then);
     });
 
+    it('should emit no timestamp in game event', function() {
+        var given = [];
+
+        var when = {
+            cmd: "CreateGame",
+            user: {
+                userName: "Ragnar"
+            },
+            name: "TheFirstGame",
+            timeStamp: ""
+        };
+
+        var then = [{
+            event: "GameNoTimeStamp",
+            user: {
+                userName: "Ragnar"
+            },
+            name: "TheFirstGame",
+            timeStamp: ""
+        }];
+
+        var actualEvents = tictactoe(given).executeCommand(when);
+        should(actualEvents).eql(then);
+    });
+
     it('should emit game created event', function() {
 
         var given = [];

@@ -78,3 +78,13 @@ describe('join game command', function() {
         should(actualEvents).eql(then);
     });
 });
+
+/*
+
+it('should emit player moved event', function() {
+
+        var actualEvents = tictactoe(given).executeCommand(when);
+        should(actualEvents).eql(then);
+    });
+
+ */

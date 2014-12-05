@@ -4,6 +4,7 @@ module.exports = function(history) {
 
     var gameState = tictactoeState(history);
 
+
     return {
         executeCommand: function(cmd) {
 
@@ -23,6 +24,13 @@ module.exports = function(history) {
                             name: cmd.name,
                             timeStamp: cmd.timeStamp
                         }];
+                    } else if (!cmd.timeStamp) {
+                        return [{
+                            event: "GameNoTimeStamp",
+                            user: cmd.user,
+                            name: cmd.name,
+                            timeStamp: cmd.timeStamp
+                        }];
                     } else
                         return [{
                             event: "GameCreated",
@@ -37,24 +45,39 @@ module.exports = function(history) {
                             event: "GameNotExists",
                             user: cmd.user,
                             name: cmd.name,
+                            coord: cmd.coord,
                             timeStamp: cmd.timeStamp
                         }];
                     }
-                    if (gameState.currentPlayer().userName === cmd.user.userName) {
-                        return [{
-                            event: "PlayerMoved",
-                            user: cmd.user,
-                            name: cmd.name,
-                            timeStamp: cmd.timeStamp
-                        }]
-                    }
+
                     if (gameState.currentPlayer().userName !== cmd.user.userName) {
                         return [{
                             event: "MovePlayerAttempted",
                             user: cmd.user,
                             name: cmd.name,
+                            coord: cmd.coord,
                             timeStamp: cmd.timeStamp
                         }];
+                    }
+
+                    if (gameState.currentPlayer().userName === cmd.user.userName) {
+                        if (gameState.movePlayer(cmd.coord)) {
+                            return [{
+                                event: "PlayerMoved",
+                                user: cmd.user,
+                                name: cmd.name,
+                                coord: cmd.coord,
+                                timeStamp: cmd.timeStamp
+                            }];
+                        } else {
+                            return [{
+                                event: "IllegalMove",
+                                user: cmd.user,
+                                name: cmd.name,
+                                coord: cmd.coord,
+                                timeStamp: cmd.timeStamp
+                            }];
+                        }
                     }
                 },
                 //"": function(cmd) {},

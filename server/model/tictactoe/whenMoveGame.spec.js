@@ -32,6 +32,7 @@ describe('move player command', function() {
                 userName: "Ragnar"
             },
             name: "TheFirstGame",
+            coord: [0, 0],
             timeStamp: "2014-12-02T11:29:29"
         };
 
@@ -41,6 +42,7 @@ describe('move player command', function() {
                 userName: "Ragnar"
             },
             name: "TheFirstGame",
+            coord: [0, 0],
             timeStamp: "2014-12-02T11:29:29"
         }];
 
@@ -72,6 +74,7 @@ describe('move player command', function() {
                 userName: "Kiddi"
             },
             name: "TheFirstGame",
+            coord: [0, 0],
             timeStamp: "2014-12-02T11:29:29"
         };
 
@@ -81,6 +84,7 @@ describe('move player command', function() {
                 userName: "Kiddi"
             },
             name: "TheFirstGame",
+            coord: [0, 0],
             timeStamp: "2014-12-02T11:29:29"
         }];
 

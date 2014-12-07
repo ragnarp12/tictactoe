@@ -10,9 +10,9 @@ module.exports = function(history) {
     var currentPlayer = null;
     var gridSize = 3;
     var gameBoard = [
-        ['', '', ''],
-        ['', '', ''],
-        ['', '', '']
+        ['-', '-', '-'],
+        ['-', '-', '-'],
+        ['-', '-', '-']
     ];
 
     _.each(history, function(event) {
@@ -25,13 +25,16 @@ module.exports = function(history) {
             player1 = event.user;
             gameCreated = true;
         }
-        if(event.event === "") {
-          
+        if (event.event === "MoveMade") {
+            row = event.coord[0];
+            col = event.coord[1];
+
+            movePlayer();
         }
     });
 
     function isFree() {
-        return (gameBoard[col][row] === '');
+        return (gameBoard[row][col] === '-');
     }
 
     function isOutOfBounds() {
@@ -39,33 +42,57 @@ module.exports = function(history) {
     }
 
     function switchPlayer() {
-        currentPlayer = (currentPlayer.username === player1.username ? player2.username : player1.username);
+        currentPlayer = (currentPlayer === player1) ? player2 : player1;
     }
 
     function movePlayer() {
         if (isFree() && !isOutOfBounds()) {
-            gameBoard[row][col] = (currentPlayer.username === player1.username ? 'X' : 'O');
+            gameBoard[row][col] = (currentPlayer === player1) ? 'X' : 'O';
             switchPlayer();
-            resetBoard();
-            draw();
+            //draw();
             return true;
         }
         return false;
     }
 
-    function resetBoard () {
-      for(i = 0; i<gridSize; i++) {
-        gameBoard[i][0] = (gameBoard[i][0] === '' ? '-' : gameBoard[i][0]);
-        gameBoard[i][1] = (gameBoard[i][1] === '' ? '-' : gameBoard[i][1]);
-        gameBoard[i][2] = (gameBoard[i][2] === '' ? '-' : gameBoard[i][2]);
-      }
+    function checkWin() {
+        // vertical
+        for (i = 0; i < gridSize; i++) {
+            if (gameBoard[0][i] === gameBoard[1][i] && gameBoard[1][i] === gameBoard[2][i] && gameBoard[2][i] !== '-') {
+                return true;
+            }
+        }
+
+        // Horizontal
+        for (i = 0; i < gridSize; i++) {
+            if (gameBoard[i][0] === gameBoard[i][1] && gameBoard[i][1] === gameBoard[i][2] && gameBoard[i][2] !== '-') {
+                return true;
+            }
+        }
+
+        // Diagonal TopLeft-BottomRight
+        if (gameBoard[0][0] === gameBoard[1][1] && gameBoard[1][1] === gameBoard[2][2] && gameBoard[2][2] !== '-') {
+            return true;
+        }
+
+        // Diagonal BottomLeft-TopRight
+        if (gameBoard[2][0] === gameBoard[1][1] && gameBoard[1][1] === gameBoard[0][2] && gameBoard[0][2] !== '-') {
+            return true;
+        }
+
+        return false;
     }
 
     function draw() {
-      for(i = 0; i<gridSize; i++) {
-        console.log(gameBoard[i][0] + gameBoard[i][1] + gameBoard[i][2] );
-      }
+        /*for (i = 0; i < gridSize; i++) {
+      console.log(gameBoard[i][0] + gameBoard[i][1] + gameBoard[i][2]);
+    }*/
+
+        console.log(gameBoard[0][0] + gameBoard[0][1] + gameBoard[0][2]);
+        console.log(gameBoard[1][0] + gameBoard[1][1] + gameBoard[1][2]);
+        console.log(gameBoard[2][0] + gameBoard[2][1] + gameBoard[2][2]);
     }
+
     return {
         gameFull: function() {
             return gameFull;
@@ -80,6 +107,9 @@ module.exports = function(history) {
             row = coord[0];
             col = coord[1];
             return movePlayer();
+        },
+        checkWin: function() {
+            return checkWin();
         }
 
     }

@@ -51,6 +51,7 @@ module.exports = function(history) {
                     }
 
                     if (gameState.currentPlayer().userName !== cmd.user.userName) {
+                        console.log("currentPlayer: ",gameState.currentPlayer());
                         return [{
                             event: "MovePlayerAttempted",
                             user: cmd.user,
@@ -62,13 +63,25 @@ module.exports = function(history) {
 
                     if (gameState.currentPlayer().userName === cmd.user.userName) {
                         if (gameState.movePlayer(cmd.coord)) {
-                            return [{
-                                event: "PlayerMoved",
-                                user: cmd.user,
-                                name: cmd.name,
-                                coord: cmd.coord,
-                                timeStamp: cmd.timeStamp
-                            }];
+                            if (gameState.checkWin()) {
+                              console.log("Game won");
+                                return [{
+                                    event: "GameWin",
+                                    user: cmd.user,
+                                    name: cmd.name,
+                                    coord: cmd.coord,
+                                    timeStamp: cmd.timeStamp
+                                }];
+                            } else {
+                              console.log("Moving player");
+                                return [{
+                                    event: "PlayerMoved",
+                                    user: cmd.user,
+                                    name: cmd.name,
+                                    coord: cmd.coord,
+                                    timeStamp: cmd.timeStamp
+                                }];
+                            }
                         } else {
                             return [{
                                 event: "IllegalMove",

@@ -18,7 +18,7 @@ Then install npm packages
 # npm install -g grunt-cli
 # apt-get install node
 # ln -s /usr/bin/nodejs /usr/bin/node
-# npm install-g  bower
+# npm install -g bower
 ```
 
 Now install packages to run GO server

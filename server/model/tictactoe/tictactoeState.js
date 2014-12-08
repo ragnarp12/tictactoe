@@ -55,28 +55,47 @@ module.exports = function(history) {
         return false;
     }
 
+    function checkDraw() {
+        for (i = 0; i < gridSize; i++) {
+            for (j = 0; j < gridSize; j++) {
+                if (gameBoard[i][j] === '-') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     function checkWin() {
         // vertical
-        for (i = 0; i < gridSize; i++) {
-            if (gameBoard[0][i] === gameBoard[1][i] && gameBoard[1][i] === gameBoard[2][i] && gameBoard[2][i] !== '-') {
+        for (var i = 0; i < gridSize; i++) {
+            if (gameBoard[0][i] === gameBoard[1][i] &&
+                gameBoard[1][i] === gameBoard[2][i] &&
+                gameBoard[2][i] !== '-') {
                 return true;
             }
         }
 
         // Horizontal
-        for (i = 0; i < gridSize; i++) {
-            if (gameBoard[i][0] === gameBoard[i][1] && gameBoard[i][1] === gameBoard[i][2] && gameBoard[i][2] !== '-') {
+        for (var j = 0; j < gridSize; j++) {
+            if (gameBoard[j][0] === gameBoard[j][1] &&
+                gameBoard[j][1] === gameBoard[j][2] &&
+                gameBoard[j][2] !== '-') {
                 return true;
             }
         }
 
         // Diagonal TopLeft-BottomRight
-        if (gameBoard[0][0] === gameBoard[1][1] && gameBoard[1][1] === gameBoard[2][2] && gameBoard[2][2] !== '-') {
+        if (gameBoard[0][0] === gameBoard[1][1] &&
+            gameBoard[1][1] === gameBoard[2][2] &&
+            gameBoard[2][2] !== '-') {
             return true;
         }
 
         // Diagonal BottomLeft-TopRight
-        if (gameBoard[2][0] === gameBoard[1][1] && gameBoard[1][1] === gameBoard[0][2] && gameBoard[0][2] !== '-') {
+        if (gameBoard[2][0] === gameBoard[1][1] &&
+            gameBoard[1][1] === gameBoard[0][2] &&
+            gameBoard[0][2] !== '-') {
             return true;
         }
 
@@ -110,6 +129,9 @@ module.exports = function(history) {
         },
         checkWin: function() {
             return checkWin();
+        },
+        checkDraw: function() {
+            return checkDraw();
         }
 
     }

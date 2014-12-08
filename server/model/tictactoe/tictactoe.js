@@ -51,7 +51,7 @@ module.exports = function(history) {
                     }
 
                     if (gameState.currentPlayer().userName !== cmd.user.userName) {
-                        console.log("currentPlayer: ",gameState.currentPlayer());
+                        //console.log("currentPlayer: ",gameState.currentPlayer());
                         return [{
                             event: "MovePlayerAttempted",
                             user: cmd.user,
@@ -64,7 +64,7 @@ module.exports = function(history) {
                     if (gameState.currentPlayer().userName === cmd.user.userName) {
                         if (gameState.movePlayer(cmd.coord)) {
                             if (gameState.checkWin()) {
-                              console.log("Game won");
+                                //console.log("Game won");
                                 return [{
                                     event: "GameWin",
                                     user: cmd.user,
@@ -72,8 +72,16 @@ module.exports = function(history) {
                                     coord: cmd.coord,
                                     timeStamp: cmd.timeStamp
                                 }];
+                            } else if (gameState.checkDraw()) {
+                                return [{
+                                    event: "GameDraw",
+                                    user: cmd.user,
+                                    name: cmd.name,
+                                    coord: cmd.coord,
+                                    timeStamp: cmd.timeStamp
+                                }];
                             } else {
-                              console.log("Moving player");
+                                //console.log("Moving player");
                                 return [{
                                     event: "PlayerMoved",
                                     user: cmd.user,
@@ -98,7 +106,7 @@ module.exports = function(history) {
 
                 "JoinGame": function(cmd) {
                     if (gameState.gameFull()) {
-                        console.log("Game full");
+                        //console.log("Game full");
                         return [{
                             event: "FullGameJoinAttempted",
                             user: cmd.user,
@@ -107,7 +115,7 @@ module.exports = function(history) {
                         }];
                     }
 
-                    console.log("Join game");
+                    //console.log("Join game");
                     return [{
                         event: "GameJoined",
                         user: cmd.user,

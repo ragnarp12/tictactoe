@@ -9,17 +9,11 @@ describe('join game command', function() {
     it('should emit game joined event', function() {
 
         var given = [
-            testMethod.createGame("Ragnar")
+            testMethod.eventCreateGame("Ragnar")
         ];
 
-        var when = {
-            cmd: "JoinGame",
-            user: {
-                userName: "Kiddi"
-            },
-            name: "TheFirstGame",
-            timeStamp: "2014-12-02T11:29:29"
-        };
+        var when = testMethod.cmdJoinGame("Kiddi");
+
         var then = [{
             event: "GameJoined",
             user: {
@@ -35,35 +29,17 @@ describe('join game command', function() {
 
     it('should emit FullGameJoinAttempted event when game full', function() {
 
-        var given = [{
-                event: "GameCreated",
-                user: {
-                    userName: "Ragnar"
-                },
-                name: "TheFirstGame",
-                timeStamp: "2014-12-02T11:29:29"
-            }, {
-                event: "GameJoined",
-                user: {
-                    userName: "Kiddi"
-                },
-                name: "TheFirstGame",
-                timeStamp: "2014-12-02T11:29:29"
-            }
-
+        var given = [
+        testMethod.eventCreateGame("Ragnar"), 
+        testMethod.eventJoinGame("Kiddi")
         ];
-        var when = {
-            cmd: "JoinGame",
-            user: {
-                userName: "Kiddi"
-            },
-            name: "TheFirstGame",
-            timeStamp: "2014-12-02T11:29:29"
-        };
+
+        var when = testMethod.cmdJoinGame("Kalli");
+
         var then = [{
             event: "FullGameJoinAttempted",
             user: {
-                userName: "Kiddi"
+                userName: "Kalli"
             },
             name: "TheFirstGame",
             timeStamp: "2014-12-02T11:29:29"
@@ -77,17 +53,11 @@ describe('join game command', function() {
     it('should emit no username trying join event', function() {
 
         var given = [
-            testMethod.createGame()
+            testMethod.eventCreateGame()
         ];
 
-        var when = {
-            cmd: "JoinGame",
-            user: {
-                userName: ""
-            },
-            name: "TheFirstGame",
-            timeStamp: "2014-12-02T11:29:29"
-        };
+        var when = testMethod.cmdJoinGame("");
+
         var then = [{
             event: "NoUserNameJoin",
             user: {

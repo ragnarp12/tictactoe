@@ -1,21 +1,15 @@
 var should = require('should');
 var _ = require('lodash');
 
-var tictactoe = require('./tictactoe')
+var tictactoe = require('./tictactoe');
+var testMethod = require('./testMethods');
 
 describe('create game command', function() {
 
     it('should emit no username in game event', function() {
         var given = [];
 
-        var when = {
-            cmd: "CreateGame",
-            user: {
-                userName: ""
-            },
-            name: "TheFirstGame",
-            timeStamp: "2014-12-02T11:29:29"
-        };
+        var when = testMethod.cmdCreateGame("", "TheFirstGame");
 
         var then = [{
             event: "GameNoUserName",
@@ -33,14 +27,7 @@ describe('create game command', function() {
     it('should emit no game name in game event', function() {
         var given = [];
 
-        var when = {
-            cmd: "CreateGame",
-            user: {
-                userName: "Ragnar"
-            },
-            name: "",
-            timeStamp: "2014-12-02T11:29:29"
-        };
+        var when = testMethod.cmdCreateGame("Ragnar", "");
 
         var then = [{
             event: "GameNoName",
@@ -83,14 +70,9 @@ describe('create game command', function() {
     it('should emit game created event', function() {
 
         var given = [];
-        var when = {
-            cmd: "CreateGame",
-            user: {
-                userName: "Ragnar"
-            },
-            name: "TheFirstGame",
-            timeStamp: "2014-12-02T11:29:29"
-        };
+
+        var when = testMethod.cmdCreateGame("Ragnar", "TheFirstGame");
+
         var then = [{
             event: "GameCreated",
             user: {

@@ -3,30 +3,8 @@
 var should = require('should');
 var _ = require('lodash');
 
-var tictactoe = require('./tictactoe')
-
-var createGame = function() {
-    return {
-        event: "GameCreated",
-        user: {
-            userName: "Ragnar"
-        },
-        name: "TheFirstGame",
-        timeStamp: "2014-12-02T11:29:29"
-    };
-};
-
-var joinGame = function() {
-    return {
-        event: "GameJoined",
-        user: {
-            userName: "Kiddi"
-        },
-        name: "TheFirstGame",
-        timeStamp: "2014-12-02T11:29:29"
-
-    };
-};
+var tictactoe = require('./tictactoe');
+var testMethod = require('./testMethods');
 
 var movePlayer = function(username, coords) {
     return {
@@ -56,8 +34,8 @@ describe('move player command', function() {
 
     it('should emit player moved event', function() {
         var given = [
-            createGame(),
-            joinGame()
+            testMethod.createGame("Ragnar"),
+            testMethod.joinGame("Kiddi")
         ];
 
         var when = movePlayer("Ragnar", [0, 0]);
@@ -78,8 +56,8 @@ describe('move player command', function() {
 
     it('should emit player moved attempted event', function() {
         var given = [
-            createGame(),
-            joinGame()
+            testMethod.createGame("Ragnar"),
+            testMethod.joinGame("Kiddi")
         ];
 
         var when = movePlayer("Kiddi", [0, 0]);
@@ -100,8 +78,8 @@ describe('move player command', function() {
 
     it('should emit player X won event', function() {
         var given = [
-            createGame(),
-            joinGame(),
+            testMethod.createGame("Ragnar"),
+            testMethod.joinGame("Kiddi"),
             moveMade("Ragnar", [0, 0]),
             moveMade("Kiddi", [0, 1]),
             moveMade("Ragnar", [1, 0]),
@@ -127,8 +105,8 @@ describe('move player command', function() {
     it('should emit game draw event', function() {
 
         var given = [
-            createGame(),
-            joinGame(),
+            testMethod.createGame("Ragnar"),
+            testMethod.joinGame("Kiddi"),
             moveMade("Ragnar", [0, 1]),
             moveMade("Kiddi", [0, 0]),
 

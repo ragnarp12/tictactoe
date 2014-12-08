@@ -113,6 +113,13 @@ module.exports = function(history) {
                             name: cmd.name,
                             timeStamp: cmd.timeStamp
                         }];
+                    } else if (cmd.user.userName === "") {
+                        return [{
+                            event: "NoUserNameJoin",
+                            user: cmd.user,
+                            name: cmd.name,
+                            timeStamp: cmd.timeStamp
+                        }]
                     }
 
                     //console.log("Join game");

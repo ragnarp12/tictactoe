@@ -56,8 +56,8 @@ module.exports = function(history) {
     }
 
     function checkDraw() {
-        for (i = 0; i < gridSize; i++) {
-            for (j = 0; j < gridSize; j++) {
+        for (var i = 0; i < gridSize; i++) {
+            for (var j = 0; j < gridSize; j++) {
                 if (gameBoard[i][j] === '-') {
                     return false;
                 }

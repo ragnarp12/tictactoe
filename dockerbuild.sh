@@ -1,7 +1,14 @@
 #!/bin/bash
 
+checkError() {
+	rc=$?
+	if [[ $rc != 0 ]] ; then
+		echo $1 $rc
+		exit $rc
+	fi
+}
 # Fail on error
-set -e
+# set -e
 # echo ${PIPESTATUS[0]}
 # export PATH=$PATH:/usr/local/bin
 
@@ -10,12 +17,15 @@ rm -rf ./dist
 
 echo Install Bower components
 bower install --no-color
+checkError "Bower failed to install components"
 
 echo Install NPM packages
 npm install --no-color
+checkError "NPM failed to install components"
 
 echo Building app
 grunt --no-color
+checkError "Grunt build failed with exit code"
 
 echo Copy Dockerfile to ./dist/
 cp ./Dockerfile ./dist/
@@ -27,5 +37,6 @@ npm install --production
 
 echo Building docker image
 docker build -t ragnarp12/tictactoe .
+checkError "Docker image build failed with exit code "
 
 echo "Done"

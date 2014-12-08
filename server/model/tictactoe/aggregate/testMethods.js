@@ -1,47 +1,53 @@
 'use strict';
 
-exports.eventCreateGame = function(username) {
+var testTimeStamp = "2014-12-02T11:29:29";
+var testName = "TheFirstGame"
+
+exports.testTimeStamp = testTimeStamp;
+exports.testName = testName;
+
+exports.eventCreateGame = function(username, gName) {
     return {
         event: "GameCreated",
         user: {
             userName: username
         },
-        name: "TheFirstGame",
-        timeStamp: "2014-12-02T11:29:29"
+        name: gName,
+        timeStamp: testTimeStamp
     };
 };
 
-exports.cmdCreateGame = function(username, gamename) {
+exports.cmdCreateGame = function(username, gName) {
     return {
         cmd: "CreateGame",
         user: {
             userName: username
         },
-        name: gamename,
-        timeStamp: "2014-12-02T11:29:29"
+        name: gName,
+        timeStamp: testTimeStamp
     };
 };
 
-exports.eventJoinGame = function(username) {
+exports.eventJoinGame = function(username, gName) {
     return {
         event: "GameJoined",
         user: {
             userName: username
         },
-        name: "TheFirstGame",
-        timeStamp: "2014-12-02T11:29:29"
+        name: gName,
+        timeStamp: testTimeStamp
 
     };
 };
 
-exports.cmdJoinGame = function(username) {
+exports.cmdJoinGame = function(username, gName) {
     return {
         cmd: "JoinGame",
         user: {
             userName: username
         },
-        name: "TheFirstGame",
-        timeStamp: "2014-12-02T11:29:29"
+        name: gName,
+        timeStamp: testTimeStamp
     };
 };
 
@@ -51,9 +57,9 @@ exports.eventMovePlayer = function(username, coords) {
         user: {
             userName: username
         },
-        name: "TheFirstGame",
+        name: testName,
         coord: coords,
-        timeStamp: "2014-12-02T11:29:29"
+        timeStamp: testTimeStamp
     };
 };
 
@@ -63,8 +69,8 @@ exports.cmdMovePlayer = function(username, coords) {
         user: {
             userName: username
         },
-        name: "TheFirstGame",
+        name: testName,
         coord: coords,
-        timeStamp: "2014-12-02T11:29:29"
+        timeStamp: testTimeStamp
     };
 };

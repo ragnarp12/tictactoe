@@ -61,6 +61,16 @@ module.exports = function(history) {
                         }];
                     }
 
+                    if (cmd.coord.length !== 2) {
+                        return [{
+                            event: "MoveWrongCoordLength",
+                            user: cmd.user,
+                            name: cmd.name,
+                            coord: cmd.coord,
+                            timeStamp: cmd.timeStamp
+                        }]
+                    }
+
                     if (gameState.currentPlayer().userName === cmd.user.userName) {
                         if (gameState.movePlayer(cmd.coord)) {
                             if (gameState.checkWin()) {
@@ -105,6 +115,15 @@ module.exports = function(history) {
                 //"": function(cmd) {},
 
                 "JoinGame": function(cmd) {
+                    if (!cmd.name || cmd.name === "") {
+                        return [{
+                            event: "JoinNoNameProvided",
+                            user: cmd.user,
+                            name: cmd.name,
+                            timeStamp: cmd.timeStamp
+                        }];
+                    }
+
                     if (gameState.gameFull()) {
                         //console.log("Game full");
                         return [{
@@ -113,7 +132,7 @@ module.exports = function(history) {
                             name: cmd.name,
                             timeStamp: cmd.timeStamp
                         }];
-                    } else if (cmd.user.userName === "") {
+                    } else if (cmd.user.userName === "" || !cmd.user.userName) {
                         return [{
                             event: "NoUserNameJoin",
                             user: cmd.user,

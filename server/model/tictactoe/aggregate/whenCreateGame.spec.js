@@ -9,15 +9,15 @@ describe('create game command', function() {
     it('should emit no username in game event', function() {
         var given = [];
 
-        var when = testMethod.cmdCreateGame("", "TheFirstGame");
+        var when = testMethod.cmdCreateGame("", testMethod.testName);
 
         var then = [{
             event: "GameNoUserName",
             user: {
                 userName: ""
             },
-            name: "TheFirstGame",
-            timeStamp: "2014-12-02T11:29:29"
+            name: testMethod.testName,
+            timeStamp: testMethod.testTimeStamp
         }];
 
         var actualEvents = tictactoe(given).executeCommand(when);
@@ -35,7 +35,7 @@ describe('create game command', function() {
                 userName: "Ragnar"
             },
             name: "",
-            timeStamp: "2014-12-02T11:29:29"
+            timeStamp: testMethod.testTimeStamp
         }];
 
         var actualEvents = tictactoe(given).executeCommand(when);
@@ -50,7 +50,7 @@ describe('create game command', function() {
             user: {
                 userName: "Ragnar"
             },
-            name: "TheFirstGame",
+            name: testMethod.testName,
             timeStamp: ""
         };
 
@@ -59,7 +59,7 @@ describe('create game command', function() {
             user: {
                 userName: "Ragnar"
             },
-            name: "TheFirstGame",
+            name: testMethod.testName,
             timeStamp: ""
         }];
 
@@ -71,15 +71,15 @@ describe('create game command', function() {
 
         var given = [];
 
-        var when = testMethod.cmdCreateGame("Ragnar", "TheFirstGame");
+        var when = testMethod.cmdCreateGame("Ragnar", testMethod.testName);
 
         var then = [{
             event: "GameCreated",
             user: {
                 userName: "Ragnar"
             },
-            name: "TheFirstGame",
-            timeStamp: "2014-12-02T11:29:29"
+            name: testMethod.testName,
+            timeStamp: testMethod.testTimeStamp
         }];
 
         var actualEvents = tictactoe(given).executeCommand(when);

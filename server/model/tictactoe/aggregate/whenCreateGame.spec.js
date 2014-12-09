@@ -9,10 +9,11 @@ describe('create game command', function() {
     it('should emit no username in game event', function() {
         var given = [];
 
-        var when = testMethod.cmdCreateGame("", testMethod.testName);
+        var when = testMethod.cmdCreateGame("", testMethod.testName, "1");
 
         var then = [{
             event: "GameNoUserName",
+            id: "1",
             user: {
                 userName: ""
             },
@@ -27,10 +28,11 @@ describe('create game command', function() {
     it('should emit no game name in game event', function() {
         var given = [];
 
-        var when = testMethod.cmdCreateGame("Ragnar", "");
+        var when = testMethod.cmdCreateGame("Ragnar", "", "1");
 
         var then = [{
             event: "GameNoName",
+            id: "1",
             user: {
                 userName: "Ragnar"
             },
@@ -47,6 +49,7 @@ describe('create game command', function() {
 
         var when = {
             cmd: "CreateGame",
+            id: "1",
             user: {
                 userName: "Ragnar"
             },
@@ -56,6 +59,7 @@ describe('create game command', function() {
 
         var then = [{
             event: "GameNoTimeStamp",
+            id: "1",
             user: {
                 userName: "Ragnar"
             },
@@ -71,10 +75,11 @@ describe('create game command', function() {
 
         var given = [];
 
-        var when = testMethod.cmdCreateGame("Ragnar", testMethod.testName);
+        var when = testMethod.cmdCreateGame("Ragnar", testMethod.testName, "1");
 
         var then = [{
             event: "GameCreated",
+            id: "1",
             user: {
                 userName: "Ragnar"
             },

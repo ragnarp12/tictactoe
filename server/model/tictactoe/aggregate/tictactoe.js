@@ -13,6 +13,7 @@ module.exports = function(history) {
                     if (!cmd.user.userName) {
                         return [{
                             event: "GameNoUserName",
+                            id: cmd.id,
                             user: cmd.user,
                             name: cmd.name,
                             timeStamp: cmd.timeStamp
@@ -20,6 +21,7 @@ module.exports = function(history) {
                     } else if (!cmd.name) {
                         return [{
                             event: "GameNoName",
+                            id: cmd.id,
                             user: cmd.user,
                             name: cmd.name,
                             timeStamp: cmd.timeStamp
@@ -27,6 +29,7 @@ module.exports = function(history) {
                     } else if (!cmd.timeStamp) {
                         return [{
                             event: "GameNoTimeStamp",
+                            id: cmd.id,
                             user: cmd.user,
                             name: cmd.name,
                             timeStamp: cmd.timeStamp
@@ -34,6 +37,7 @@ module.exports = function(history) {
                     } else
                         return [{
                             event: "GameCreated",
+                            id: cmd.id,
                             user: cmd.user,
                             name: cmd.name,
                             timeStamp: cmd.timeStamp
@@ -43,6 +47,7 @@ module.exports = function(history) {
                     if (!gameState.isGameCreated()) {
                         return [{
                             event: "GameNotExists",
+                            id: cmd.id,
                             user: cmd.user,
                             name: cmd.name,
                             coord: cmd.coord,
@@ -54,6 +59,7 @@ module.exports = function(history) {
                         //console.log("currentPlayer: ",gameState.currentPlayer());
                         return [{
                             event: "MovePlayerAttempted",
+                            id: cmd.id,
                             user: cmd.user,
                             name: cmd.name,
                             coord: cmd.coord,
@@ -64,6 +70,7 @@ module.exports = function(history) {
                     if (cmd.coord.length !== 2) {
                         return [{
                             event: "MoveWrongCoordLength",
+                            id: cmd.id,
                             user: cmd.user,
                             name: cmd.name,
                             coord: cmd.coord,
@@ -77,6 +84,7 @@ module.exports = function(history) {
                                 //console.log("Game won");
                                 return [{
                                     event: "GameWin",
+                                    id: cmd.id,
                                     user: cmd.user,
                                     name: cmd.name,
                                     coord: cmd.coord,
@@ -85,6 +93,7 @@ module.exports = function(history) {
                             } else if (gameState.checkDraw()) {
                                 return [{
                                     event: "GameDraw",
+                                    id: cmd.id,
                                     user: cmd.user,
                                     name: cmd.name,
                                     coord: cmd.coord,
@@ -94,6 +103,7 @@ module.exports = function(history) {
                                 //console.log("Moving player");
                                 return [{
                                     event: "PlayerMoved",
+                                    id: cmd.id,
                                     user: cmd.user,
                                     name: cmd.name,
                                     coord: cmd.coord,
@@ -103,6 +113,7 @@ module.exports = function(history) {
                         } else {
                             return [{
                                 event: "IllegalMove",
+                                id: cmd.id,
                                 user: cmd.user,
                                 name: cmd.name,
                                 coord: cmd.coord,
@@ -118,6 +129,7 @@ module.exports = function(history) {
                     if (!cmd.name || cmd.name === "") {
                         return [{
                             event: "JoinNoNameProvided",
+                            id: cmd.id,
                             user: cmd.user,
                             name: cmd.name,
                             timeStamp: cmd.timeStamp
@@ -128,6 +140,7 @@ module.exports = function(history) {
                         //console.log("Game full");
                         return [{
                             event: "FullGameJoinAttempted",
+                            id: cmd.id,
                             user: cmd.user,
                             name: cmd.name,
                             timeStamp: cmd.timeStamp
@@ -135,6 +148,7 @@ module.exports = function(history) {
                     } else if (cmd.user.userName === "" || !cmd.user.userName) {
                         return [{
                             event: "NoUserNameJoin",
+                            id: cmd.id,
                             user: cmd.user,
                             name: cmd.name,
                             timeStamp: cmd.timeStamp
@@ -144,6 +158,7 @@ module.exports = function(history) {
                     //console.log("Join game");
                     return [{
                         event: "GameJoined",
+                        id: cmd.id,
                         user: cmd.user,
                         name: cmd.name,
                         timeStamp: cmd.timeStamp

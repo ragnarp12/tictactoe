@@ -1,26 +1,26 @@
 'use strict';
+
 var should = require('should');
 var app = require('../../app');
 var request = require('supertest');
 
-
-describe('POST /api/createGame', function() {
-    it('should respond Game created JSON array', function(done) {
+describe('POST /api/joinGame', function() {
+    it('should respond with event in JSON array', function(done) {
 
         var req = request(app);
 
         var given = {
-            id: "111",
-            cmd: "CreateGame",
+            id: "123",
+            cmd: "JoinGame",
             user: {
-                userName: "Ragnar"
+                userName: "Krummi"
             },
             name: "TheFirstGame",
             timeStamp: "2014-12-02T11:29:29"
         };
 
         req
-            .post("/api/creategame")
+            .post('/api/joinGame')
             .type('json')
             .send(given)
             .end(
@@ -28,9 +28,8 @@ describe('POST /api/createGame', function() {
                     if (err) {
                         return done(err);
                     }
-
-                    res.body.should.be.instanceOf(Array);
+                    res.body.should.be.instanceof(Array);
                     done();
-                })
+                });
     });
 });

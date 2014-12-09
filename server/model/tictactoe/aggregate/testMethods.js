@@ -6,9 +6,10 @@ var testName = "TheFirstGame"
 exports.testTimeStamp = testTimeStamp;
 exports.testName = testName;
 
-exports.eventCreateGame = function(username, gName) {
+exports.eventCreateGame = function(username, gName, gId) {
     return {
         event: "GameCreated",
+        id: gId,
         user: {
             userName: username
         },
@@ -17,9 +18,10 @@ exports.eventCreateGame = function(username, gName) {
     };
 };
 
-exports.cmdCreateGame = function(username, gName) {
+exports.cmdCreateGame = function(username, gName, gId) {
     return {
         cmd: "CreateGame",
+        id: gId,
         user: {
             userName: username
         },
@@ -28,9 +30,10 @@ exports.cmdCreateGame = function(username, gName) {
     };
 };
 
-exports.eventJoinGame = function(username, gName) {
+exports.eventJoinGame = function(username, gName, gId) {
     return {
         event: "GameJoined",
+        id: gId,
         user: {
             userName: username
         },
@@ -40,9 +43,10 @@ exports.eventJoinGame = function(username, gName) {
     };
 };
 
-exports.cmdJoinGame = function(username, gName) {
+exports.cmdJoinGame = function(username, gName, gId) {
     return {
         cmd: "JoinGame",
+        id: gId,
         user: {
             userName: username
         },
@@ -51,9 +55,10 @@ exports.cmdJoinGame = function(username, gName) {
     };
 };
 
-exports.eventMovePlayer = function(username, coords) {
+exports.eventMovePlayer = function(username, coords, gId) {
     return {
         event: "MoveMade",
+        id: gId,
         user: {
             userName: username
         },
@@ -63,9 +68,10 @@ exports.eventMovePlayer = function(username, coords) {
     };
 };
 
-exports.cmdMovePlayer = function(username, coords) {
+exports.cmdMovePlayer = function(username, coords, gId) {
     return {
         cmd: "MovePlayer",
+        id: gId,
         user: {
             userName: username
         },

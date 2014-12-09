@@ -12,10 +12,11 @@ describe('join game command', function() {
             testMethod.eventCreateGame("Ragnar")
         ];
 
-        var when = testMethod.cmdJoinGame("Kiddi", testMethod.testName);
+        var when = testMethod.cmdJoinGame("Kiddi", testMethod.testName, "1");
 
         var then = [{
             event: "GameJoined",
+            id: "1",
             user: {
                 userName: "Kiddi"
             },
@@ -30,14 +31,15 @@ describe('join game command', function() {
     it('should emit FullGameJoinAttempted event when game full', function() {
 
         var given = [
-            testMethod.eventCreateGame("Ragnar"),
-            testMethod.eventJoinGame("Kiddi")
+            testMethod.eventCreateGame("Ragnar", "1"),
+            testMethod.eventJoinGame("Kiddi", "1")
         ];
 
-        var when = testMethod.cmdJoinGame("Kalli", testMethod.testName);
+        var when = testMethod.cmdJoinGame("Kalli", testMethod.testName, "1");
 
         var then = [{
             event: "FullGameJoinAttempted",
+            id: "1",
             user: {
                 userName: "Kalli"
             },
@@ -53,13 +55,14 @@ describe('join game command', function() {
     it('should emit no username trying join event', function() {
 
         var given = [
-            testMethod.eventCreateGame()
+            testMethod.eventCreateGame("Ragnar")
         ];
 
-        var when = testMethod.cmdJoinGame("", testMethod.testName);
+        var when = testMethod.cmdJoinGame("", testMethod.testName, "1");
 
         var then = [{
             event: "NoUserNameJoin",
+            id: "1",
             user: {
                 userName: ""
             },
@@ -74,13 +77,14 @@ describe('join game command', function() {
     it('should emit no game name join event', function() {
 
         var given = [
-            testMethod.eventCreateGame("Ragnar")
+            testMethod.eventCreateGame("Ragnar", "1")
         ];
 
-        var when = testMethod.cmdJoinGame("Kiddi", "");
+        var when = testMethod.cmdJoinGame("Kiddi", "", "1");
 
         var then = [{
             event: "JoinNoNameProvided",
+            id: "1",
             user: {
                 userName: "Kiddi"
             },

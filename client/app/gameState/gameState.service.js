@@ -6,7 +6,7 @@ angular.module('tictactoeApp')
 
             var gameState = {
                 created: true,
-                board: [['', '', ''], ['', '', ''], ['', '', '']]
+                board: [['X', 'X', ''], ['', '', ''], ['', '', '']]
             };
 
             return gameState;

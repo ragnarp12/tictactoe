@@ -9,13 +9,11 @@ angular.module('tictactoeApp', [
 ])
     .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 
-        console.log('CONFIG');
-
-        $urlRouterProvider
-            .otherwise('/');
+        $urlRouterProvider.otherwise('/');
 
         $locationProvider.html5Mode(true);
-    }).value('guid', function() {
+
+    }).value('uuid', function() {
         function s4() {
             return Math.floor((1 + Math.random()) * 0x10000)
                 .toString(16)
@@ -27,7 +25,7 @@ angular.module('tictactoeApp', [
                 s4() + '-' + s4() + s4() + s4();
         }
 
-        console.log('guid', calculate());
+        //console.log('guid', calculate());
 
         return calculate();
     });

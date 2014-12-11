@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('tictactoeApp')
-    .controller('TictactoeController', ['$scope', 'gameState', 'guid',
-        function($scope, gameState, guid) {
+    .controller('TictactoeCtrl', ['$scope', 'gameState',
+        function($scope, gameState) {
 
-        	$scope.gameState = gameState();
-        	$scope.guid = guid();
-        	
+        	$scope.test = '';
+
+        	$scope.game = gameState();
         }
     ]);

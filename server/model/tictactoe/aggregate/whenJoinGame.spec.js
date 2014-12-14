@@ -9,10 +9,10 @@ describe('join game command', function() {
     it('should emit game joined event', function() {
 
         var given = [
-            testMethod.eventCreateGame("Ragnar")
+            testMethod.eventCreateGame("Ragnar", testMethod.testName, "X", "1")
         ];
 
-        var when = testMethod.cmdJoinGame("Kiddi", testMethod.testName, "1");
+        var when = testMethod.cmdJoinGame("Kiddi", testMethod.testName, "O", "1");
 
         var then = [{
             event: "GameJoined",
@@ -21,7 +21,8 @@ describe('join game command', function() {
                 userName: "Kiddi"
             },
             name: testMethod.testName,
-            timeStamp: testMethod.testTimeStamp
+            timeStamp: testMethod.testTimeStamp,
+            side: "O"
         }];
 
         var actualEvents = tictactoe(given).executeCommand(when);
@@ -31,11 +32,11 @@ describe('join game command', function() {
     it('should emit FullGameJoinAttempted event when game full', function() {
 
         var given = [
-            testMethod.eventCreateGame("Ragnar", "1"),
-            testMethod.eventJoinGame("Kiddi", "1")
+            testMethod.eventCreateGame("Ragnar", testMethod.testName, "X", "1"),
+            testMethod.eventJoinGame("Kiddi", testMethod.testName, "O", "1")
         ];
 
-        var when = testMethod.cmdJoinGame("Kalli", testMethod.testName, "1");
+        var when = testMethod.cmdJoinGame("Kalli", testMethod.testName, "O", "1");
 
         var then = [{
             event: "FullGameJoinAttempted",
@@ -55,10 +56,10 @@ describe('join game command', function() {
     it('should emit no username trying join event', function() {
 
         var given = [
-            testMethod.eventCreateGame("Ragnar")
+            testMethod.eventCreateGame("Ragnar", testMethod.testName, "X", "1")
         ];
 
-        var when = testMethod.cmdJoinGame("", testMethod.testName, "1");
+        var when = testMethod.cmdJoinGame("", testMethod.testName, "O", "1");
 
         var then = [{
             event: "NoUserNameJoin",
@@ -77,10 +78,10 @@ describe('join game command', function() {
     it('should emit no game name join event', function() {
 
         var given = [
-            testMethod.eventCreateGame("Ragnar", "1")
+            testMethod.eventCreateGame("Ragnar", testMethod.testName, "X", "1")
         ];
 
-        var when = testMethod.cmdJoinGame("Kiddi", "", "1");
+        var when = testMethod.cmdJoinGame("Kiddi", "", "O", "1");
 
         var then = [{
             event: "JoinNoNameProvided",

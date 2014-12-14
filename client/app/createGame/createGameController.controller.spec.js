@@ -1,4 +1,5 @@
 'use strict';
+
 describe('Controller: CreateGameCtrl', function() {
 
     // Load the controller's module
@@ -28,21 +29,23 @@ describe('Controller: CreateGameCtrl', function() {
     it('should post variables from scope for uuid, game name and userName and process resulting events, and assign me to X', function() {
         var currDate = new Date().toISOString();
 
-        httpBackend.expectPOST('/api/createGame/', {
+        httpBackend.expectPOST('/api/createGame', {
             id: '111',
             cmd: 'CreateGame',
             user: {
                 userName: 'Ragnar',
             },
             name: 'TheSecondGame',
-            timeStamp: currDate
+            timeStamp: currDate,
+            side: 'X'
         }).respond([{
             id: '111',
             event: 'GameCreated',
             user: {
                 userName: 'Ragnar',
             },
-            name: 'TheSecondGame'
+            name: 'TheSecondGame',
+            side: 'X'
         }]);
 
 
@@ -51,21 +54,22 @@ describe('Controller: CreateGameCtrl', function() {
         scope.userName = 'Ragnar';
         scope.createGame();
         httpBackend.flush();
-        expect(location.search()['gameId']).toBe('111');
+        expect(location.search()['id']).toBe('111');
         expect(location.path()).toBe('/tictactoe');
     });
 
     it('should post variables. Events should be no username', function() {
         var currDate = new Date().toISOString();
 
-        httpBackend.expectPOST('/api/createGame/', {
+        httpBackend.expectPOST('/api/createGame', {
             id: '111',
             cmd: 'CreateGame',
             user: {
                 userName: '',
             },
             name: 'TheSecondGame',
-            timeStamp: currDate
+            timeStamp: currDate,
+            side: 'X'
         }).respond([{
             id: '111',
             event: 'GameNoUserName',
@@ -80,21 +84,22 @@ describe('Controller: CreateGameCtrl', function() {
         scope.currDate = currDate;
         scope.createGame();
         httpBackend.flush();
-        expect(location.search()['gameId']).toBe('111');
+        expect(location.search()['id']).toBe('111');
         expect(location.path()).toBe('/tictactoe');
     });
 
     it('should post variables. Events should be no game name', function() {
         var currDate = new Date().toISOString();
 
-        httpBackend.expectPOST('/api/createGame/', {
+        httpBackend.expectPOST('/api/createGame', {
             id: '111',
             cmd: 'CreateGame',
             user: {
                 userName: 'Ragnar',
             },
             name: '',
-            timeStamp: currDate
+            timeStamp: currDate,
+            side: 'X'
         }).respond([{
             id: '111',
             event: 'GameNoName',
@@ -109,7 +114,7 @@ describe('Controller: CreateGameCtrl', function() {
         scope.currDate = currDate;
         scope.createGame();
         httpBackend.flush();
-        expect(location.search()['gameId']).toBe('111');
+        expect(location.search()['id']).toBe('111');
         expect(location.path()).toBe('/tictactoe');
     });
 
@@ -119,14 +124,15 @@ describe('Controller: CreateGameCtrl', function() {
         // null or ''
         // var currDate = new Date().toISOString();
 
-        httpBackend.expectPOST('/api/createGame/', {
+        httpBackend.expectPOST('/api/createGame', {
             id: '111',
             cmd: 'CreateGame',
             user: {
                 userName: 'Ragnar',
             },
             name: 'TheSecondGame',
-            timeStamp: '-'
+            timeStamp: '-',
+            side: 'X'
         }).respond([{
             id: '111',
             event: 'GameNoTimeStamp',
@@ -141,7 +147,7 @@ describe('Controller: CreateGameCtrl', function() {
         scope.currDate = '-';
         scope.createGame();
         httpBackend.flush();
-        expect(location.search()['gameId']).toBe('111');
+        expect(location.search()['id']).toBe('111');
         expect(location.path()).toBe('/tictactoe');
     });
 

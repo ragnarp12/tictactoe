@@ -9,7 +9,7 @@ describe('create game command', function() {
     it('should emit no username in game event', function() {
         var given = [];
 
-        var when = testMethod.cmdCreateGame("", testMethod.testName, "1");
+        var when = testMethod.cmdCreateGame("", testMethod.testName, "X", "1");
 
         var then = [{
             event: "GameNoUserName",
@@ -28,7 +28,7 @@ describe('create game command', function() {
     it('should emit no game name in game event', function() {
         var given = [];
 
-        var when = testMethod.cmdCreateGame("Ragnar", "", "1");
+        var when = testMethod.cmdCreateGame("Ragnar", "", "X", "1");
 
         var then = [{
             event: "GameNoName",
@@ -75,7 +75,7 @@ describe('create game command', function() {
 
         var given = [];
 
-        var when = testMethod.cmdCreateGame("Ragnar", testMethod.testName, "1");
+        var when = testMethod.cmdCreateGame("Ragnar", testMethod.testName, "X", "1");
 
         var then = [{
             event: "GameCreated",
@@ -84,7 +84,8 @@ describe('create game command', function() {
                 userName: "Ragnar"
             },
             name: testMethod.testName,
-            timeStamp: testMethod.testTimeStamp
+            timeStamp: testMethod.testTimeStamp,
+            side: "X"
         }];
 
         var actualEvents = tictactoe(given).executeCommand(when);

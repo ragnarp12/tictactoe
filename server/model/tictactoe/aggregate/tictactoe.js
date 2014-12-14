@@ -40,7 +40,8 @@ module.exports = function(history) {
                             id: cmd.id,
                             user: cmd.user,
                             name: cmd.name,
-                            timeStamp: cmd.timeStamp
+                            timeStamp: cmd.timeStamp,
+                            side: cmd.side
                         }]
                 },
                 "MovePlayer": function(cmd) {
@@ -63,7 +64,8 @@ module.exports = function(history) {
                             user: cmd.user,
                             name: cmd.name,
                             coord: cmd.coord,
-                            timeStamp: cmd.timeStamp
+                            timeStamp: cmd.timeStamp,
+                            side: cmd.side
                         }];
                     }
 
@@ -78,7 +80,10 @@ module.exports = function(history) {
                         }]
                     }
 
-                    if (gameState.currentPlayer().userName === cmd.user.userName) {
+                    var currPlayer = gameState.currentPlayer().userName;
+                    if (currPlayer === cmd.user.userName) {
+                        //console.log("GameState: ", gameState.currentPlayer().userName);
+                        //console.log("cmd Username: ", cmd.user.userName);
                         if (gameState.movePlayer(cmd.coord)) {
                             if (gameState.checkWin()) {
                                 //console.log("Game won");
@@ -88,26 +93,30 @@ module.exports = function(history) {
                                     user: cmd.user,
                                     name: cmd.name,
                                     coord: cmd.coord,
-                                    timeStamp: cmd.timeStamp
+                                    timeStamp: cmd.timeStamp,
+                                    side: cmd.side
                                 }];
-                            } else if (gameState.checkDraw()) {
+                            } 
+                            if (gameState.checkDraw()) {
                                 return [{
                                     event: "GameDraw",
                                     id: cmd.id,
                                     user: cmd.user,
                                     name: cmd.name,
                                     coord: cmd.coord,
-                                    timeStamp: cmd.timeStamp
+                                    timeStamp: cmd.timeStamp,
+                                    side: cmd.side
                                 }];
                             } else {
-                                //console.log("Moving player");
+
                                 return [{
                                     event: "PlayerMoved",
                                     id: cmd.id,
                                     user: cmd.user,
                                     name: cmd.name,
                                     coord: cmd.coord,
-                                    timeStamp: cmd.timeStamp
+                                    timeStamp: cmd.timeStamp,
+                                    side: cmd.side
                                 }];
                             }
                         } else {
@@ -155,16 +164,17 @@ module.exports = function(history) {
                         }]
                     }
 
-                    //console.log("Join game");
+                    //console.log("Joning game: ",cmd.user);
                     return [{
                         event: "GameJoined",
                         id: cmd.id,
                         user: cmd.user,
                         name: cmd.name,
-                        timeStamp: cmd.timeStamp
+
+                        timeStamp: cmd.timeStamp,
+                        side: cmd.side
                     }];
                 }
-
 
             }
             return cmdHandlers[cmd.cmd](cmd);

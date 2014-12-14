@@ -14,7 +14,7 @@ describe('move player command', function() {
             testMethod.eventJoinGame("Kiddi", testMethod.testName, "1")
         ];
 
-        var when = testMethod.cmdMovePlayer("Ragnar", [0, 0], "1");
+        var when = testMethod.cmdMovePlayer("Ragnar", "X", [0, 0], "1");
 
         var then = [{
             event: "PlayerMoved",
@@ -24,20 +24,21 @@ describe('move player command', function() {
             },
             name: testMethod.testName,
             coord: [0, 0],
-            timeStamp: testMethod.testTimeStamp
+            timeStamp: testMethod.testTimeStamp,
+            side: "X"
         }];
 
         var actualEvents = tictactoe(given).executeCommand(when);
         should(actualEvents).eql(then);
     });
 
-    it('should emit player moved attempted event', function() {
+    it('should emit player moved attempted where use is O but should be X event', function() {
         var given = [
             testMethod.eventCreateGame("Ragnar", testMethod.testName, "1"),
             testMethod.eventJoinGame("Kiddi", testMethod.testName, "1")
         ];
 
-        var when = testMethod.cmdMovePlayer("Kiddi", [0, 0], "1");
+        var when = testMethod.cmdMovePlayer("Kiddi", "O", [0, 0], "1");
 
         var then = [{
             event: "MovePlayerAttempted",
@@ -47,24 +48,51 @@ describe('move player command', function() {
             },
             name: testMethod.testName,
             coord: [0, 0],
-            timeStamp: testMethod.testTimeStamp
+            timeStamp: testMethod.testTimeStamp,
+            side: "O"
         }];
 
         var actualEvents = tictactoe(given).executeCommand(when);
         should(actualEvents).eql(then);
     });
 
+    it('should emit player moved attempted where use is X but should be O event', function() {
+        var given = [
+            testMethod.eventCreateGame("Ragnar", testMethod.testName, "1"),
+            testMethod.eventJoinGame("Kiddi", testMethod.testName, "1"),
+            testMethod.eventMovePlayer("Ragnar", "X", [0, 0], "1")
+        ];
+
+        var when = testMethod.cmdMovePlayer("Ragnar", "X", [0, 1], "1");
+
+        var then = [{
+            event: "MovePlayerAttempted",
+            id: "1",
+            user: {
+                userName: "Ragnar"
+            },
+            name: testMethod.testName,
+            coord: [0, 1],
+            timeStamp: testMethod.testTimeStamp,
+            side: "X"
+        }];
+
+        var actualEvents = tictactoe(given).executeCommand(when);
+        should(actualEvents).eql(then);
+    });
+
+
     it('should emit player X won event', function() {
         var given = [
             testMethod.eventCreateGame("Ragnar", testMethod.testName, "1"),
             testMethod.eventJoinGame("Kiddi", testMethod.testName, "1", "1"),
-            testMethod.eventMovePlayer("Ragnar", [0, 0], "1"),
-            testMethod.eventMovePlayer("Kiddi", [0, 1], "1"),
-            testMethod.eventMovePlayer("Ragnar", [1, 0], "1"),
-            testMethod.eventMovePlayer("Kiddi", [0, 2], "1")
+            testMethod.eventMovePlayer("Ragnar", "X", [0, 0], "1"),
+            testMethod.eventMovePlayer("Kiddi", "O", [0, 1], "1"),
+            testMethod.eventMovePlayer("Ragnar", "X", [1, 0], "1"),
+            testMethod.eventMovePlayer("Kiddi", "O", [0, 2], "1")
         ];
 
-        var when = testMethod.cmdMovePlayer("Ragnar", [2, 0], "1");
+        var when = testMethod.cmdMovePlayer("Ragnar", "X", [2, 0], "1");
 
         var then = [{
             event: "GameWin",
@@ -74,7 +102,8 @@ describe('move player command', function() {
             },
             coord: [2, 0],
             name: testMethod.testName,
-            timeStamp: testMethod.testTimeStamp
+            timeStamp: testMethod.testTimeStamp,
+            side: "X"
         }];
 
         var actualEvents = tictactoe(given).executeCommand(when);
@@ -86,20 +115,20 @@ describe('move player command', function() {
         var given = [
             testMethod.eventCreateGame("Ragnar", testMethod.testName, "1"),
             testMethod.eventJoinGame("Kiddi", testMethod.testName, "1"),
-            testMethod.eventMovePlayer("Ragnar", [0, 1], "1"),
-            testMethod.eventMovePlayer("Kiddi", [0, 0], "1"),
+            testMethod.eventMovePlayer("Ragnar", "X", [0, 1], "1"),
+            testMethod.eventMovePlayer("Kiddi", "O", [0, 0], "1"),
 
-            testMethod.eventMovePlayer("Ragnar", [1, 1], "1"),
-            testMethod.eventMovePlayer("Kiddi", [2, 0], "1"),
+            testMethod.eventMovePlayer("Ragnar", "X", [1, 1], "1"),
+            testMethod.eventMovePlayer("Kiddi", "O", [2, 0], "1"),
 
-            testMethod.eventMovePlayer("Ragnar", [2, 2], "1"),
-            testMethod.eventMovePlayer("Kiddi", [2, 1], "1"),
+            testMethod.eventMovePlayer("Ragnar", "X", [2, 2], "1"),
+            testMethod.eventMovePlayer("Kiddi", "O", [2, 1], "1"),
 
-            testMethod.eventMovePlayer("Ragnar", [0, 2], "1"),
-            testMethod.eventMovePlayer("Kiddi", [1, 2], "1")
+            testMethod.eventMovePlayer("Ragnar", "X", [0, 2], "1"),
+            testMethod.eventMovePlayer("Kiddi", "O", [1, 2], "1")
         ];
 
-        var when = testMethod.cmdMovePlayer("Ragnar", [1, 0], "1");
+        var when = testMethod.cmdMovePlayer("Ragnar", "X", [1, 0], "1");
 
         var then = [{
             event: "GameDraw",
@@ -109,7 +138,8 @@ describe('move player command', function() {
             },
             coord: [1, 0],
             name: testMethod.testName,
-            timeStamp: testMethod.testTimeStamp
+            timeStamp: testMethod.testTimeStamp,
+            side: "X"
         }];
 
         var actualEvents = tictactoe(given).executeCommand(when);
@@ -124,7 +154,7 @@ describe('move player command', function() {
             testMethod.eventJoinGame("Kiddi", testMethod.testName, "1"),
         ];
 
-        var when = testMethod.cmdMovePlayer("Ragnar", [], "1");
+        var when = testMethod.cmdMovePlayer("Ragnar", "X", [], "1");
 
         var then = [{
             event: "MoveWrongCoordLength",

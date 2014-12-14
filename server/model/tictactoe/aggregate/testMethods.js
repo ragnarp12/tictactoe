@@ -6,7 +6,7 @@ var testName = "TheFirstGame"
 exports.testTimeStamp = testTimeStamp;
 exports.testName = testName;
 
-exports.eventCreateGame = function(username, gName, gId) {
+exports.eventCreateGame = function(username, gName, pside, gId) {
     return {
         event: "GameCreated",
         id: gId,
@@ -14,11 +14,12 @@ exports.eventCreateGame = function(username, gName, gId) {
             userName: username
         },
         name: gName,
-        timeStamp: testTimeStamp
+        timeStamp: testTimeStamp,
+        side: pside
     };
 };
 
-exports.cmdCreateGame = function(username, gName, gId) {
+exports.cmdCreateGame = function(username, gName, pside, gId) {
     return {
         cmd: "CreateGame",
         id: gId,
@@ -26,11 +27,12 @@ exports.cmdCreateGame = function(username, gName, gId) {
             userName: username
         },
         name: gName,
-        timeStamp: testTimeStamp
+        timeStamp: testTimeStamp,
+        side: pside
     };
 };
 
-exports.eventJoinGame = function(username, gName, gId) {
+exports.eventJoinGame = function(username, gName, pside, gId) {
     return {
         event: "GameJoined",
         id: gId,
@@ -38,12 +40,12 @@ exports.eventJoinGame = function(username, gName, gId) {
             userName: username
         },
         name: gName,
-        timeStamp: testTimeStamp
-
+        timeStamp: testTimeStamp,
+        side: pside
     };
 };
 
-exports.cmdJoinGame = function(username, gName, gId) {
+exports.cmdJoinGame = function(username, gName, pside, gId) {
     return {
         cmd: "JoinGame",
         id: gId,
@@ -51,24 +53,26 @@ exports.cmdJoinGame = function(username, gName, gId) {
             userName: username
         },
         name: gName,
-        timeStamp: testTimeStamp
+        timeStamp: testTimeStamp,
+        side: pside
     };
 };
 
-exports.eventMovePlayer = function(username, coords, gId) {
+exports.eventMovePlayer = function(username, pside, coords, gId) {
     return {
-        event: "MoveMade",
+        event: "PlayerMoved",
         id: gId,
         user: {
             userName: username
         },
         name: testName,
         coord: coords,
-        timeStamp: testTimeStamp
+        timeStamp: testTimeStamp,
+        side: pside
     };
 };
 
-exports.cmdMovePlayer = function(username, coords, gId) {
+exports.cmdMovePlayer = function(username, pside, coords, gId) {
     return {
         cmd: "MovePlayer",
         id: gId,
@@ -77,6 +81,7 @@ exports.cmdMovePlayer = function(username, coords, gId) {
         },
         name: testName,
         coord: coords,
-        timeStamp: testTimeStamp
+        timeStamp: testTimeStamp,
+        side: pside
     };
 };

@@ -6,6 +6,9 @@ module.exports = function() {
         loadEvents: function(id) {
             return store[id] || [];
         },
+        loadEventsAll: function() {
+            return store || [];
+        },
         storeEvents: function(id, events) {
             store[id] = (store[id] || []).concat(events);
         }

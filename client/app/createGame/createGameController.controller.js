@@ -15,15 +15,17 @@ angular.module('tictactoeApp')
                         userName: $scope.userName
                     },
                     name: $scope.gameName,
-                    timeStamp: $scope.currDate
+                    timeStamp: $scope.currDate,
+                    side: 'X'
                 };
 
 
-                var newGame = $http.post('/api/createGame/', newGamePost);
+                var newGame = $http.post('/api/createGame', newGamePost);
 
                 newGame.then(function(res) {
                     $location.url('/tictactoe');
-                    $location.search('gameId', res.data[0].id);
+                    $location.search('gameSide', 'X');
+                    $location.search('id', res.data[0].id);
                 });
             };
         }

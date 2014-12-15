@@ -112,28 +112,33 @@ describe('Controller: JoinGameCtrl', function() {
         scope.currDate = currDate;
 
         httpBackend.expectGET('/api/gameHistory/111').respond([{
-            event: "GameCreated",
-            name: "The Game",
-            id: "111"
+            event: 'GameCreated',
+            name: 'The Game',
+            id: '111',
+            user: {
+                userName: 'Ragnar'
+            }
         }]);
 
-        httpBackend.expectGET("app/createGame/createGame.html").respond('');
+        httpBackend.expectGET('app/createGame/createGame.html').respond('');
 
         httpBackend.flush();
 
         httpBackend.expectPOST('/api/joinGame', {
-            id: "111",
-            cmd: "JoinGame",
+            id: '111',
+            cmd: 'JoinGame',
             user: {
-                userName: "Ragnar",
+                userName: 'Kiddi',
             },
-            name: "The Game",
+            name: 'The Game',
             timeStamp: currDate,
-            side: "O"
+            side: 'O'
         }).respond([{
-            event: "GameJoined"
+            event: 'GameJoined'
         }]);
-        scope.userName = "Ragnar";
+        scope.userName = 'Kiddi';
+        //scope.p1 = 'Ragnar';
+
         scope.joinGame();
         httpBackend.expectGET('app/tictactoeController/tictactoe.html').respond('');
         httpBackend.flush();

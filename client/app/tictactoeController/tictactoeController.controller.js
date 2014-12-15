@@ -45,7 +45,7 @@ angular.module('tictactoeApp')
             };
 
             $scope.placeMove = function(coord) {
-                if (!$scope.myTurn()) {
+                if (!$scope.myTurn() || !$scope.other) {
                     return;
                 }
 

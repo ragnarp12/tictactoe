@@ -23,6 +23,11 @@ echo Install NPM packages
 npm install --no-color
 checkError "NPM failed to install components"
 
+unzip -o -q node_modules_patch/mongoose-migrate.zip -d node_modules
+cd node_modules/.bin
+ln -s ../mongoose-migrate/bin/migrate mongoose-migrate
+cd ../..
+
 echo Building app
 grunt --no-color
 checkError "Grunt build failed with exit code"

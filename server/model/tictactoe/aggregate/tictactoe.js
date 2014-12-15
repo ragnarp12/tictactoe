@@ -146,6 +146,17 @@ module.exports = function(history) {
                         }];
                     }
 
+                    if (cmd.userName === gameState.currentPlayer()) {
+                        return [{
+                            event: "UsernameTaken",
+                            id: cmd.id,
+                            user: cmd.user,
+                            name: cmd.name,
+                            timeStamp: cmd.timeStamp,
+                            side: cmd.side
+                        }];
+                    }
+
                     if (!cmd.timeStamp) {
                         return [{
                             event: "NoTimeStamp",

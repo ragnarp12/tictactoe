@@ -1,11 +1,13 @@
-<div class="container">
+<div id="tictactoeContainer" class="container">
   <h3>Game on - {{gameState.name || 'NoName'}} </h3>
   <div>
     <a id="joinlink" target="_new" href="{{joinUrl}}">Send this link to your opponent.</a>
   </div>
   <div ng-hide="gameState.winner || gameState.draw">
     <div  ng-class="{myturn:myTurn()}">Me: <span id="myname">{{ me.userName }}</span> - {{ myside }}</div>
-    <div  ng-class="{notmyturn:!myTurn()}">Opponent: <span id="opponentname">{{ other.userName }}</span> - {{ otherside }}</div>
+    <div  ng-class="{notmyturn:!myTurn()}">Opponent:
+      <span id="opponentname">{{ other.userName }}</span> - {{ otherside }}
+    </div>
   </div>
   <div ng-class="{'winner':gameState.winner}" ng-show="gameState.winner">
     {{ gameState.winner.userName }} - {{ gameState.winner.side }} WINS!

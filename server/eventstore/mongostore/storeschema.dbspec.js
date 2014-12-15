@@ -1,5 +1,5 @@
 'use strict';
-/*
+
 var app = require('../../app');
 var should = require('should');
 var Game = require('./storeschema');
@@ -21,4 +21,4 @@ describe('game store', function() {
             return done();
         });
     });
-});*/
+});

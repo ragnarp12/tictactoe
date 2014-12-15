@@ -9,6 +9,7 @@ module.exports = function(app, config) {
 
 
     var eventStore = require('.' + config.eventstore)();
+    console.debug(eventStore);
 
     // Insert routes below
     app.use('/api/gameHistory', require('./api/gameHistory')(eventStore).router);

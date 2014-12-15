@@ -15,16 +15,6 @@ module.exports = function() {
             });
             return deferred.promise;
         },
-        loadEventsAll: function() {
-            var deferred = q.defer();
-            Store.find(function(err, stream) {
-                if (err) {
-                    deferred.reject(err);
-                }
-                deferred.resolve(stream && stream.events || []);
-            });
-            return deferred.promise;
-        },
         storeEvents: function(id, events) {
             var deferred = q.defer();
 

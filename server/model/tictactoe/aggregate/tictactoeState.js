@@ -15,6 +15,11 @@ module.exports = function(history) {
         ['-', '-', '-']
     ];
 
+    var myValue = 0;
+    var id = undefined;
+
+    var score = [0, 0]; //x,y
+
     _.each(history, function(event) {
         if (event.event === "GameJoined") {
             player2 = event.user;
@@ -25,6 +30,7 @@ module.exports = function(history) {
             currentPlayer = event.user;
             player1 = event.user;
             gameCreated = true;
+            id = event.id;
             //console.log("Player 1 kominn: ", player1.userName);
         }
         if (event.event === "PlayerMoved") {
@@ -74,6 +80,7 @@ module.exports = function(history) {
         }
         return true;
     }
+
 
     function checkWin() {
         // vertical
@@ -132,10 +139,11 @@ module.exports = function(history) {
         isGameCreated: function() {
             return gameCreated;
         },
-        movePlayer: function(coord) {
-            row = coord[0];
-            col = coord[1];
-            //console.log("Moving player");
+        movePlayer: function(cmd) {
+            row = cmd.coord[0];
+            col = cmd.coord[1];
+
+            id = cmd.id;
             return movePlayers();
         },
         checkWin: function() {
@@ -143,7 +151,9 @@ module.exports = function(history) {
         },
         checkDraw: function() {
             return checkDraw();
+        },
+        getId: function() {
+            return id;
         }
-
     }
 };

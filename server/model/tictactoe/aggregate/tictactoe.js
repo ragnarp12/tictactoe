@@ -84,7 +84,7 @@ module.exports = function(history) {
                     if (currPlayer === cmd.user.userName) {
                         //console.log("GameState: ", gameState.currentPlayer().userName);
                         //console.log("cmd Username: ", cmd.user.userName);
-                        if (gameState.movePlayer(cmd.coord)) {
+                        if (gameState.movePlayer(cmd)) {
                             if (gameState.checkWin()) {
                                 //console.log("Game won");
                                 return [{
@@ -96,7 +96,7 @@ module.exports = function(history) {
                                     timeStamp: cmd.timeStamp,
                                     side: cmd.side
                                 }];
-                            } 
+                            }
                             if (gameState.checkDraw()) {
                                 return [{
                                     event: "GameDraw",
@@ -141,7 +141,41 @@ module.exports = function(history) {
                             id: cmd.id,
                             user: cmd.user,
                             name: cmd.name,
-                            timeStamp: cmd.timeStamp
+                            timeStamp: cmd.timeStamp,
+                            side: cmd.side
+                        }];
+                    }
+
+                    if (!cmd.timeStamp) {
+                        return [{
+                            event: "NoTimeStamp",
+                            id: cmd.id,
+                            user: cmd.user,
+                            name: cmd.name,
+                            timeStamp: cmd.timeStamp,
+                            side: cmd.side
+                        }];
+                    }
+
+                    if (!cmd.id) {
+                        return [{
+                            event: "NoIdProvided",
+                            id: cmd.id,
+                            user: cmd.user,
+                            name: cmd.name,
+                            timeStamp: cmd.timeStamp,
+                            side: cmd.side
+                        }]
+                    }
+
+                    if (cmd.id !== gameState.getId()) {
+                        return [{
+                            event: "NoGameWithThisId",
+                            id: cmd.id,
+                            user: cmd.user,
+                            name: cmd.name,
+                            timeStamp: cmd.timeStamp,
+                            side: cmd.side
                         }];
                     }
 

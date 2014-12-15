@@ -1,22 +1,29 @@
-'use strict';
-
 var should = require('should');
 var _ = require('lodash');
+var q = require('q');
 
 
-describe('tictactoe game context using stubs.', function() {
+function resolvedPromise(value) {
+    var defer = q.defer();
+    defer.resolve(value);
+    return defer.promise;
+}
 
-    it('should route command to instantiated tictactoe game with event stream from store and return and store generated events.', function() {
+
+describe('tictactoe game context', function() {
+
+    it('should route command to instantiated tictactoe game with event stream from store and return and store generated events. Test using stubs.', function(done) {
 
         var calledWithEventStoreId;
         var storedEvents;
         var eventStoreStub = {
             loadEvents: function(aggregateId) {
                 calledWithEventStoreId = aggregateId;
-                return [];
+                return resolvedPromise([]);
             },
             storeEvents: function(aggregateId, events) {
                 storedEvents = events;
+                return resolvedPromise(events);
             }
         };
 
@@ -32,42 +39,47 @@ describe('tictactoe game context using stubs.', function() {
         };
 
         var commandHandlers = tictactoe;
-
         var boundedContext = require('./tictactoeBoundedContext')(eventStoreStub, commandHandlers);
 
         var emptyCommand = {
-            id: "123"
+            id: "111"
         };
 
-        var events = boundedContext.handleCommand(emptyCommand);
+        var events;
+        boundedContext.handleCommand(emptyCommand).then(function(ev) {
+            events = ev;
+            should(executedCommand.id).be.exactly("111");
+            should(calledWithEventStoreId).be.exactly("111");
+            should(events.length).be.exactly(0);
+            should(storedEvents).be.exactly(events);
+            done();
+        });
 
-        should(executedCommand.id).be.exactly("123");
-        should(calledWithEventStoreId).be.exactly("123");
-        should(events.length).be.exactly(0);
-        should(storedEvents).be.exactly(events);
     });
 
 
-    it('should route command to instantiated tictactoe game with event stream from store and return generated events, using mock style tests.', function() {
+    it('should route command to instantiated tictactoe game with event stream from store and return generated events, using mock style tests.', function(done) {
 
         var jm = require('jsmockito').JsMockito;
         jm.Integration.importTo(global);
         /* global spy,when */
 
         var mockStore = spy({
-            loadEvents: function() {},
-            storeEvents: function() {}
-        });
-
-        when(mockStore).loadEvents('123').thenReturn([]);
-
-        var mockTickTackToe = spy({
-            executeCommand: function() {
-
+            loadEvents: function() {
+                return resolvedPromise([]);
+            },
+            storeEvents: function(events) {
+                return resolvedPromise(events);
             }
         });
 
-        when(mockTickTackToe).executeCommand().thenReturn([]);
+
+        var mockTickTackToe = spy({
+            executeCommand: function() {
+                return resolvedPromise([]);
+
+            }
+        });
 
 
         var commandHandlers = function() {
@@ -76,15 +88,19 @@ describe('tictactoe game context using stubs.', function() {
         var boundedContext = require('./tictactoeBoundedContext')(mockStore, commandHandlers);
 
         var emptyCommand = {
-            id: "123"
+            id: "111"
         };
 
-        boundedContext.handleCommand(emptyCommand);
+        boundedContext.handleCommand(emptyCommand).then(function() {
 
-        jm.verify(mockStore).loadEvents('123');
-        jm.verify(mockStore).storeEvents('123');
+            jm.verify(mockStore).loadEvents('111');
+            jm.verify(mockStore).storeEvents('111');
 
-        jm.verify(mockTickTackToe).executeCommand(emptyCommand);
+            jm.verify(mockTickTackToe).executeCommand(emptyCommand);
+
+            done();
+        });
+
 
     });
 

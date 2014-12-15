@@ -90,7 +90,31 @@ describe('join game command', function() {
                 userName: "Kiddi"
             },
             name: "",
-            timeStamp: testMethod.testTimeStamp
+            timeStamp: testMethod.testTimeStamp,
+            side: "O"
+        }];
+
+        var actualEvents = tictactoe(given).executeCommand(when);
+        should(actualEvents).eql(then);
+    });
+
+        it('should emit no game name join event', function() {
+
+        var given = [
+            testMethod.eventCreateGame("Ragnar", testMethod.testName, "X", "1")
+        ];
+
+        var when = testMethod.cmdJoinGame("Kiddi", testMethod.testName, "O", "111");
+
+        var then = [{
+            event: "NoGameWithThisId",
+            id: "111",
+            user: {
+                userName: "Kiddi"
+            },
+            name: testMethod.testName,
+            timeStamp: testMethod.testTimeStamp,
+            side: "O"
         }];
 
         var actualEvents = tictactoe(given).executeCommand(when);

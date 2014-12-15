@@ -12,13 +12,13 @@ angular.module('tictactoeApp')
 
             $scope.gameState = gameState();
 
-            thenHandleEvents($http.get('/api/gameHistory/' + $state.params.gameId));
+            thenHandleEvents($http.get('/api/gameHistory/' + $state.params.id));
 
             $scope.joinGame = function() {
 
                 $scope.currDate = (!$scope.currDate) ? new Date().toISOString() : $scope.currDate;
 
-                var joinPostPromise = $http.post('/api/joinGame/', {
+                var command = {
                     'id': $scope.gameState.id,
                     'cmd': 'JoinGame',
                     'user': {
@@ -27,7 +27,9 @@ angular.module('tictactoeApp')
                     'name': $scope.gameState.name,
                     'timeStamp': $scope.currDate,
                     'side': 'O'
-                });
+                };
+
+                var joinPostPromise = $http.post('/api/joinGame', command);
 
                 thenHandleEvents(joinPostPromise);
 

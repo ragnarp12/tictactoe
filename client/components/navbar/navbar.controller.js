@@ -5,9 +5,6 @@ angular.module('tictactoeApp')
         $scope.menu = [{
             'title': 'Create game',
             'link': '/'
-        }, {
-            'title': 'List games',
-            'link': '/list'
         }];
 
         $scope.isCollapsed = true;

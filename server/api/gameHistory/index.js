@@ -1,9 +1,11 @@
 'use strict';
-
 var express = require('express');
-var controller = require('./gameHistory.Controller');
 var router = express.Router();
 
-router.get('/', controller.getAll);
-router.get('/:id', controller.index);
-module.exports = router;
+module.exports = function(eventStore) {
+    var controller = require('./gameHistory.Controller')(eventStore);
+    router.get('/:id', controller.index);
+    return {
+        router: router
+    }
+};

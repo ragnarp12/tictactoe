@@ -35,7 +35,7 @@ angular.module('tictactoeApp')
                         },
                         'GameWin': function(event, gameState) {
                             gameState.board[event.coord[0]][event.coord[1]] = event.side;
-                            gameState.nextMove = null;
+                            gameState.nextMove = 'GameWon';
                             gameState.winner = {
                                 userName: event.user.userName,
                                 side: event.side
@@ -43,6 +43,8 @@ angular.module('tictactoeApp')
                         },
                         'GameDraw': function(event, gameState) {
                             gameState.draw = true;
+                            gameState.nextMove = 'GameDraw';
+                            gameState.board[event.coord[0]][event.coord[1]] = event.side;
                         }
                     };
 

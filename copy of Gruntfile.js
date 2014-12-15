@@ -426,7 +426,6 @@ module.exports = function(grunt) {
                 'svgmin'
             ]
         },
-
         // Test settings
         karma: {
             unit: {
@@ -449,7 +448,6 @@ module.exports = function(grunt) {
                 src: ['server/**/*.dbspec.js']
             }
         },
-
         protractor: {
             options: {
                 configFile: 'protractor.conf.js'
@@ -462,7 +460,6 @@ module.exports = function(grunt) {
                 }
             }
         },
-
         env: {
             commit: {
                 NODE_ENV: 'commit'
@@ -475,7 +472,6 @@ module.exports = function(grunt) {
             },
             all: localConfig
         },
-
         // Compiles Less to CSS
         less: {
             options: {
@@ -489,7 +485,7 @@ module.exports = function(grunt) {
                 files: {
                     '.tmp/app/app.css': '<%= yeoman.client %>/app/app.less'
                 }
-            }
+            },
         },
 
         injector: {
@@ -554,7 +550,7 @@ module.exports = function(grunt) {
                     ]
                 }
             }
-        }
+        },
     });
 
     // Used for delaying livereload until after server has restarted
@@ -673,6 +669,7 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('default', [
+        'newer:jshint',
         'test',
         'build'
     ]);

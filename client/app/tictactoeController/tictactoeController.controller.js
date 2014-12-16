@@ -30,7 +30,11 @@ angular.module('tictactoeApp')
             var gameId = $location.search()['id'];
 
             function refresh() {
+                if ($scope.gameState.refreshInterval) {
+                    $interval.cancel(refresh);
+                }
                 thenHandleEvents($http.get('/api/gameHistory/' + gameId));
+
             }
 
             refresh();

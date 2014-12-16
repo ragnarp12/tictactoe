@@ -1,25 +1,17 @@
 <div id="createContainer" class="container">
-	<form class="form-horizontal">
-		
-		<div class="col-md-7">
-			<div class="form-group">
-				<label for="gameName" class="col-sm-2 control-label">Game name</label>
-				<div class="col-sm-10">
-					<input id="gameName" class="form-control" ng-model="gameName">
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="userName" class="col-sm-2 control-label">Username</label>
-				<div class="col-sm-10">
-					<input id="userName" class="form-control" ng-model="userName">
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button id="createGame" class="btn btn-default" ng-click="createGame()">Create Game</button>
-				</div>
-			</div>
-		</div>
+	<form class="form-signin createForm" name="createForm" role="form">
+
+		<h2 class="form-signin-heading text-center">Create game</h2>
+		<label for="gameName" class="sr-only">Name</label>
+		<input id="gameName" class="form-control" ng-model="gameName" 
+				placeholder="Gamename" required ng-required="true" autofocus>
+
+		<label for="userName" class="sr-only">Username</label>
+		<input id="userName" class="form-control" ng-model="userName" 
+				placeholder="Username" required ng-required="true">
+
+		<button id="createGame"class="btn btn-lg btn-primary btn-block" ng-click="createGame()"
+					ng-disabled="createForm.$invalid">Create</button>
 		
 	</form>
 </div>

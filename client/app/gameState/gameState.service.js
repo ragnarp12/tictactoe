@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tictactoeApp')
-    .factory('gameState', function() {
+    .factory('gameState', function($interval) {
         return function() {
 
             var gameState = {
@@ -17,6 +17,7 @@ angular.module('tictactoeApp')
                 player2: null,
                 draw: false,
                 winner: undefined,
+                refreshInterval: true,
                 gameFunc: function(events) {
                     var handlers = {
                         'GameCreated': function(event, gameState) {
@@ -40,11 +41,13 @@ angular.module('tictactoeApp')
                                 userName: event.user.userName,
                                 side: event.side
                             };
+                            gameState.refreshInterval = false;
                         },
                         'GameDraw': function(event, gameState) {
                             gameState.draw = true;
                             gameState.nextMove = 'GameDraw';
                             gameState.board[event.coord[0]][event.coord[1]] = event.side;
+                            gameState.refreshInterval = false;
                         }
                     };
 

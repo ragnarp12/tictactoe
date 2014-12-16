@@ -4,8 +4,9 @@ angular.module('tictactoeApp')
     .controller('CreateGameCtrl', ['$scope', '$location', '$http', 'uuid',
         function($scope, $location, $http, uuid) {
 
-            $scope.createGame = function() {
 
+            $scope.createGame = function() {
+                
                 $scope.currDate = (!$scope.currDate) ? new Date().toISOString() : $scope.currDate;
 
                 var newGamePost = {

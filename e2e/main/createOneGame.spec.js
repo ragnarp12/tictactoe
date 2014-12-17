@@ -7,7 +7,6 @@ describe('Tictactoe game play', function() {
         createPage = require('./createGame.po');
     });
 
-
     it('should create one game', function() {
         createPage.gameName.sendKeys('Prufa');
         createPage.userName.sendKeys('Ragnar');

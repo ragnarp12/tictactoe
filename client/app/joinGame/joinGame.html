@@ -1,17 +1,24 @@
 <div id="joinContainer" class="container">
-	<form class="form-signin joinForm" name="joinForm" role="form">
-		
-		<h2 class="form-signin-heading text-center">Join game</h2>
-		<label for="userName" class="sr-only">Username</label>
-		<input id="userName" class="form-control" ng-model="userName" 
-				placeholder="Username" tabindex="1" required ng-required="true">
-
-		<div class="alert alert-danger" role="alert" ng-show="nameTaken">
-			<a href="#" class="alert-link">Username already taken</a>
+	<div class="text-center">
+		<strong id="error404" ng-show="got404">This ID doesn't exist</strong>
+		<div ng-show="!got404">
+			<form class="form-signin joinForm" name="joinForm" role="form">
+				
+				<h2 class="form-signin-heading text-center">Join game</h2>
+				<label for="userName" class="sr-only">Username</label>
+				<input id="userName" class="form-control" name="userName" ng-model="userName"
+				placeholder="Username" tabindex="1" required ng-required="true"
+				ng-maxlength="10">
+				<div class="alert alert-danger" role="alert" ng-show="nameTaken">
+					<a href="#" class="alert-link">Username already taken</a>
+				</div>
+				<div class="alert alert-danger" role="alert" ng-show="joinForm.userName.$error.maxlength">
+					<span>Too long name</span>
+				</div>
+				<button id="joinGame"class="btn btn-lg btn-primary btn-block"
+				type="submit" ng-click="joinGame()" ng-disabled="joinForm.$invalid || got404">Join</button>
+				
+			</form>
 		</div>
-
-		<button id="joinGame"class="btn btn-lg btn-primary btn-block"
-		type="submit" ng-click="joinGame()" ng-disabled="joinForm.$invalid">Join</button>
-		
-	</form>
+	</div>
 </div>

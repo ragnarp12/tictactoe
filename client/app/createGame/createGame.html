@@ -3,12 +3,21 @@
 
 		<h2 class="form-signin-heading text-center">Create game</h2>
 		<label for="gameName" class="sr-only">Name</label>
-		<input id="gameName" class="form-control" ng-model="gameName" 
-				placeholder="Gamename" required ng-required="true" autofocus>
+		<input id="gameName" class="form-control" name="gameName" ng-model="gameName" 
+				placeholder="Gamename" required ng-required="true" autofocus
+				ng-maxlength="20">
+
+		<div class="alert alert-danger" role="alert" ng-show="createForm.gameName.$error.maxlength">
+			<span>Too long name</span>
+		</div>
 
 		<label for="userName" class="sr-only">Username</label>
-		<input id="userName" class="form-control" ng-model="userName" 
-				placeholder="Username" required ng-required="true">
+		<input id="userName" class="form-control" name="userName" ng-model="userName" 
+				placeholder="Username" required ng-required="true" ng-maxlength="10">
+
+		<div class="alert alert-danger" role="alert" ng-show="createForm.userName.$error.maxlength">
+			<span>Too long username</span>
+		</div>
 
 		<button id="createGame"class="btn btn-lg btn-primary btn-block" ng-click="createGame()"
 					ng-disabled="createForm.$invalid">Create</button>

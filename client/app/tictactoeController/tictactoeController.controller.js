@@ -6,6 +6,7 @@ angular.module('tictactoeApp')
 
             $scope.gameState = gameState();
 
+
             var thenHandleEvents = function(postPromise) {
                 postPromise.then(function(data) {
                     $scope.gameState.gameFunc(data.data);
@@ -30,15 +31,11 @@ angular.module('tictactoeApp')
             var gameId = $location.search()['id'];
 
             function refresh() {
-                if ($scope.gameState.refreshInterval) {
-                    $interval.cancel(refresh);
-                }
                 thenHandleEvents($http.get('/api/gameHistory/' + gameId));
-
             }
 
             refresh();
-            $interval(refresh, 1000);
+            $interval(refresh, 2000);
 
             function mySide() {
                 return $location.search()['gameSide'];

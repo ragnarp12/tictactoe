@@ -10,7 +10,7 @@ describe('Tictactoe game play', function() {
     });
 
 
-    it('should create one game and join it', function() {
+    it('should create one game and another user joins it', function() {
         createPage.gameName.sendKeys("Prufa");
         createPage.userName.sendKeys("Ragnar");
 
@@ -19,6 +19,7 @@ describe('Tictactoe game play', function() {
         var tictactoe = require('./tictactoe.po');
 
         expect(tictactoe.gameboard).toBeDefined();
+        expect(tictactoe.myname.getText()).toBe("Ragnar")
 
 
         tictactoe.joinLink.getAttribute('href').then(function(joinHref) {
@@ -28,13 +29,19 @@ describe('Tictactoe game play', function() {
                 browser.executeScript('window.open("' + joinHref + '", ' + '"' + joinerHandle + '"' + ')');
                 // switch to new window
                 browser.switchTo().window(joinerHandle);
+
                 joinPage.userName.sendKeys("Kiddi");
                 joinPage.joinGameBtn.click();
+
                 browser.driver.wait(function() {
                     return browser.driver.isElementPresent(by.css('#gameboard')).then(function(el) {
                         return el === true;
                     });
-                })
+                }).then(function() {
+                    expect(tictactoe.gameboard).toBeDefined();
+                    expect(tictactoe.myname.getText()).toBe("Kiddi");
+                    expect(tictactoe.opponentname.getText()).toBe("Ragnar");
+                });
             });
         });
     });

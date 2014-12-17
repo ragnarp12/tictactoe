@@ -4,10 +4,26 @@ angular.module('tictactoeApp')
     .controller('JoinGameCtrl', ['$scope', '$http', '$location', 'gameState', '$state',
         function($scope, $http, $location, gameState, $state) {
 
+            $scope.got404 = false;
+
             var thenHandleEvents = function(postPromise) {
-                postPromise.then(function(data) {
+
+                postPromise
+                    .success(function(data, status, headers, config) {
+                        //if(status===404)
+                        //    console.log("Error1");
+                        $scope.gameState.gameFunc(data);
+
+                    })
+                    .error(function(data, status, headers, config) {
+                        //$scope.got404 = true;
+                        //console.log("Error2");
+                        $scope.got404 = true;
+                    });
+
+                /*postPromise.then(function(data) {
                     $scope.gameState.gameFunc(data.data);
-                });
+                });*/
             };
 
             $scope.nameTaken = false;
@@ -18,7 +34,7 @@ angular.module('tictactoeApp')
             thenHandleEvents($http.get('/api/gameHistory/' + $state.params.id));
 
             $scope.joinGame = function() {
-                
+
                 $scope.p1 = $scope.gameState.player1.userName;
 
                 if ($scope.p1 === $scope.userName) {

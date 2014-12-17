@@ -9,16 +9,19 @@ var testMethod = require('./testMethods');
 describe('move player command', function() {
 
     it('should emit player moved event', function() {
+
+        var genid = testMethod.uuid();
+
         var given = [
-            testMethod.eventCreateGame("Ragnar", testMethod.testName, "1"),
-            testMethod.eventJoinGame("Kiddi", testMethod.testName, "1")
+            testMethod.eventCreateGame("Ragnar", testMethod.testName, genid),
+            testMethod.eventJoinGame("Kiddi", testMethod.testName, genid)
         ];
 
-        var when = testMethod.cmdMovePlayer("Ragnar", "X", [0, 0], "1");
+        var when = testMethod.cmdMovePlayer("Ragnar", "X", [0, 0], genid);
 
         var then = [{
             event: "PlayerMoved",
-            id: "1",
+            id: genid,
             user: {
                 userName: "Ragnar"
             },
@@ -33,16 +36,19 @@ describe('move player command', function() {
     });
 
     it('should emit player moved attempted where use is O but should be X event', function() {
+
+        var genid = testMethod.uuid();
+
         var given = [
-            testMethod.eventCreateGame("Ragnar", testMethod.testName, "1"),
-            testMethod.eventJoinGame("Kiddi", testMethod.testName, "1")
+            testMethod.eventCreateGame("Ragnar", testMethod.testName, genid),
+            testMethod.eventJoinGame("Kiddi", testMethod.testName, genid)
         ];
 
-        var when = testMethod.cmdMovePlayer("Kiddi", "O", [0, 0], "1");
+        var when = testMethod.cmdMovePlayer("Kiddi", "O", [0, 0], genid);
 
         var then = [{
             event: "MovePlayerAttempted",
-            id: "1",
+            id: genid,
             user: {
                 userName: "Kiddi"
             },
@@ -57,17 +63,20 @@ describe('move player command', function() {
     });
 
     it('should emit player moved attempted where use is X but should be O event', function() {
+
+        var genid = testMethod.uuid();
+
         var given = [
-            testMethod.eventCreateGame("Ragnar", testMethod.testName, "1"),
-            testMethod.eventJoinGame("Kiddi", testMethod.testName, "1"),
-            testMethod.eventMovePlayer("Ragnar", "X", [0, 0], "1")
+            testMethod.eventCreateGame("Ragnar", testMethod.testName, genid),
+            testMethod.eventJoinGame("Kiddi", testMethod.testName, genid),
+            testMethod.eventMovePlayer("Ragnar", "X", [0, 0], genid)
         ];
 
-        var when = testMethod.cmdMovePlayer("Ragnar", "X", [0, 1], "1");
+        var when = testMethod.cmdMovePlayer("Ragnar", "X", [0, 1], genid);
 
         var then = [{
             event: "MovePlayerAttempted",
-            id: "1",
+            id: genid,
             user: {
                 userName: "Ragnar"
             },
@@ -83,20 +92,23 @@ describe('move player command', function() {
 
 
     it('should emit player X won event', function() {
+
+        var genid = testMethod.uuid();
+
         var given = [
-            testMethod.eventCreateGame("Ragnar", testMethod.testName, "1"),
-            testMethod.eventJoinGame("Kiddi", testMethod.testName, "1", "1"),
-            testMethod.eventMovePlayer("Ragnar", "X", [0, 0], "1"),
-            testMethod.eventMovePlayer("Kiddi", "O", [0, 1], "1"),
-            testMethod.eventMovePlayer("Ragnar", "X", [1, 0], "1"),
-            testMethod.eventMovePlayer("Kiddi", "O", [0, 2], "1")
+            testMethod.eventCreateGame("Ragnar", testMethod.testName, genid),
+            testMethod.eventJoinGame("Kiddi", testMethod.testName, "O", genid),
+            testMethod.eventMovePlayer("Ragnar", "X", [0, 0], genid),
+            testMethod.eventMovePlayer("Kiddi", "O", [0, 1], genid),
+            testMethod.eventMovePlayer("Ragnar", "X", [1, 0], genid),
+            testMethod.eventMovePlayer("Kiddi", "O", [0, 2], genid)
         ];
 
-        var when = testMethod.cmdMovePlayer("Ragnar", "X", [2, 0], "1");
+        var when = testMethod.cmdMovePlayer("Ragnar", "X", [2, 0], genid);
 
         var then = [{
             event: "GameWin",
-            id: "1",
+            id: genid,
             user: {
                 userName: "Ragnar"
             },
@@ -112,27 +124,29 @@ describe('move player command', function() {
 
     it('should emit game draw event', function() {
 
+        var genid = testMethod.uuid();
+
         var given = [
-            testMethod.eventCreateGame("Ragnar", testMethod.testName, "1"),
-            testMethod.eventJoinGame("Kiddi", testMethod.testName, "1"),
-            testMethod.eventMovePlayer("Ragnar", "X", [0, 1], "1"),
-            testMethod.eventMovePlayer("Kiddi", "O", [0, 0], "1"),
+            testMethod.eventCreateGame("Ragnar", testMethod.testName, genid),
+            testMethod.eventJoinGame("Kiddi", testMethod.testName, genid),
+            testMethod.eventMovePlayer("Ragnar", "X", [0, 1], genid),
+            testMethod.eventMovePlayer("Kiddi", "O", [0, 0], genid),
 
-            testMethod.eventMovePlayer("Ragnar", "X", [1, 1], "1"),
-            testMethod.eventMovePlayer("Kiddi", "O", [2, 0], "1"),
+            testMethod.eventMovePlayer("Ragnar", "X", [1, 1], genid),
+            testMethod.eventMovePlayer("Kiddi", "O", [2, 0], genid),
 
-            testMethod.eventMovePlayer("Ragnar", "X", [2, 2], "1"),
-            testMethod.eventMovePlayer("Kiddi", "O", [2, 1], "1"),
+            testMethod.eventMovePlayer("Ragnar", "X", [2, 2], genid),
+            testMethod.eventMovePlayer("Kiddi", "O", [2, 1], genid),
 
-            testMethod.eventMovePlayer("Ragnar", "X", [0, 2], "1"),
-            testMethod.eventMovePlayer("Kiddi", "O", [1, 2], "1")
+            testMethod.eventMovePlayer("Ragnar", "X", [0, 2], genid),
+            testMethod.eventMovePlayer("Kiddi", "O", [1, 2], genid)
         ];
 
-        var when = testMethod.cmdMovePlayer("Ragnar", "X", [1, 0], "1");
+        var when = testMethod.cmdMovePlayer("Ragnar", "X", [1, 0], genid);
 
         var then = [{
             event: "GameDraw",
-            id: "1",
+            id: genid,
             user: {
                 userName: "Ragnar"
             },
@@ -149,16 +163,18 @@ describe('move player command', function() {
 
     it('should emit no coord provided event', function() {
 
+        var genid = testMethod.uuid();
+
         var given = [
-            testMethod.eventCreateGame("Ragnar", testMethod.testName, "1"),
-            testMethod.eventJoinGame("Kiddi", testMethod.testName, "1"),
+            testMethod.eventCreateGame("Ragnar", testMethod.testName, genid),
+            testMethod.eventJoinGame("Kiddi", testMethod.testName, genid),
         ];
 
-        var when = testMethod.cmdMovePlayer("Ragnar", "X", [], "1");
+        var when = testMethod.cmdMovePlayer("Ragnar", "X", [], genid);
 
         var then = [{
             event: "MoveWrongCoordLength",
-            id: "1",
+            id: genid,
             user: {
                 userName: "Ragnar"
             },

@@ -17,7 +17,6 @@ angular.module('tictactoeApp')
                 player2: null,
                 draw: false,
                 winner: undefined,
-                refreshInterval: true,
                 gameFunc: function(events) {
                     var handlers = {
                         'GameCreated': function(event, gameState) {
@@ -36,18 +35,16 @@ angular.module('tictactoeApp')
                         },
                         'GameWin': function(event, gameState) {
                             gameState.board[event.coord[0]][event.coord[1]] = event.side;
-                            gameState.nextMove = 'GameWon';
+                            gameState.nextMove = 'X';
                             gameState.winner = {
                                 userName: event.user.userName,
                                 side: event.side
                             };
-                            gameState.refreshInterval = false;
                         },
                         'GameDraw': function(event, gameState) {
                             gameState.draw = true;
                             gameState.nextMove = 'GameDraw';
                             gameState.board[event.coord[0]][event.coord[1]] = event.side;
-                            gameState.refreshInterval = false;
                         }
                     };
 

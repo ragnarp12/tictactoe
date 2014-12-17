@@ -7,6 +7,8 @@ var testMethod = require('./testMethods');
 describe('create game command', function() {
 
     it('should emit no username in game event', function() {
+        var genid = testMethod.uuid();
+
         var given = [];
 
         var when = testMethod.cmdCreateGame("", testMethod.testName, "X", "1");
@@ -26,13 +28,16 @@ describe('create game command', function() {
     });
 
     it('should emit no game name in game event', function() {
+
+        var genid = testMethod.uuid();
+
         var given = [];
 
-        var when = testMethod.cmdCreateGame("Ragnar", "", "X", "1");
+        var when = testMethod.cmdCreateGame("Ragnar", "", "X", genid);
 
         var then = [{
             event: "GameNoName",
-            id: "1",
+            id: genid,
             user: {
                 userName: "Ragnar"
             },
@@ -45,11 +50,14 @@ describe('create game command', function() {
     });
 
     it('should emit no timestamp in game event', function() {
+
+        var genid = testMethod.uuid();
+
         var given = [];
 
         var when = {
             cmd: "CreateGame",
-            id: "1",
+            id: genid,
             user: {
                 userName: "Ragnar"
             },
@@ -59,7 +67,7 @@ describe('create game command', function() {
 
         var then = [{
             event: "GameNoTimeStamp",
-            id: "1",
+            id: genid,
             user: {
                 userName: "Ragnar"
             },
@@ -73,13 +81,15 @@ describe('create game command', function() {
 
     it('should emit game created event', function() {
 
+        var genid = testMethod.uuid();
+
         var given = [];
 
-        var when = testMethod.cmdCreateGame("Ragnar", testMethod.testName, "X", "1");
+        var when = testMethod.cmdCreateGame("Ragnar", testMethod.testName, "X", genid);
 
         var then = [{
             event: "GameCreated",
-            id: "1",
+            id: genid,
             user: {
                 userName: "Ragnar"
             },

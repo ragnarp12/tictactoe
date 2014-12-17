@@ -35,7 +35,7 @@ angular.module('tictactoeApp')
                         },
                         'GameWin': function(event, gameState) {
                             gameState.board[event.coord[0]][event.coord[1]] = event.side;
-                            gameState.nextMove = 'X';
+                            gameState.nextMove = 'GameWon';
                             gameState.winner = {
                                 userName: event.user.userName,
                                 side: event.side

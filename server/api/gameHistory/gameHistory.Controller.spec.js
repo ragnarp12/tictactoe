@@ -11,7 +11,7 @@ describe('GET /api/gameHistory', function() {
             .expect(404)
             .end(function(err, res) {
                 if (err) return done(err);
-                console.log(res);
+                //console.log(res);
                 done();
             });
     });

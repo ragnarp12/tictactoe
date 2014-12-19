@@ -1,13 +1,6 @@
 #!/bin/bash
 export PATH=$PATH:/usr/local/bin
 
-checkError() {
-	rc=$?
-	if [[ $rc != 0 ]] ; then
-		echo $1 $rc
-		exit $rc
-	fi
-}
 # Fail on error
 # set -e
 # echo ${PIPESTATUS[0]}
@@ -18,11 +11,20 @@ rm -rf ./dist
 
 echo "Install Bower components"
 bower install --no-color
-checkError "Bower failed to install components"
+rc=$?
+if [[ $rc != 0 ]] ; then
+echo "Bower failed to install components " $rc
+exit $rc
+fi
 
 echo "Install NPM packages"
 npm install --no-color
-checkError "NPM failed to install components"
+
+rc=$?
+if [[ $rc != 0 ]] ; then
+echo "NPM failed to install components " $rc
+exit $rc
+fi
 
 # This is supposed to be moved closer to dock build
 #unzip -o -q node_modules_patch/mongoose-migrate.zip -d node_modules
@@ -33,7 +35,11 @@ checkError "NPM failed to install components"
 
 echo "Building app"
 grunt --no-color
-checkError "Grunt build failed with exit code"
+rc=$?
+if [[ $rc != 0 ]] ; then
+echo "Grunt build failed with exit code " $rc
+exit $rc
+fi
 
 echo "Copy Dockerfile to ./dist/"
 cp ./Dockerfile ./dist/
@@ -42,6 +48,11 @@ cd dist
 
 echo "NPM install production"
 npm install --production 
+rc=$?
+if [[ $rc != 0 ]] ; then
+echo "NPM install production " $rc
+exit $rc
+fi
 
 echo "Installing mongoose patched module"
 unzip -o -q ../node_modules_patch/mongoose-migrate.zip -d node_modules
@@ -54,6 +65,10 @@ cd ../..
 
 echo Building docker image
 docker build -t ragnarp12/tictactoe .
-checkError "Docker image build failed with exit code "
+rc=$?
+if [[ $rc != 0 ]] ; then
+echo "Docker image build failed with exit code " $rc
+exit $rc
+fi
 
 echo "Done"

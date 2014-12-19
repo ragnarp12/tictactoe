@@ -36,7 +36,7 @@ fi
 echo "Run web driver update"
 node node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update
 
-/usr/bin/Xvfb :99 -ac -screen 0 1024x768x8 &
+#/usr/bin/Xvfb :99 -ac -screen 0 1024x768x8 &
 
 echo "Run E2E tests"
 xvfb-run grunt test:e2e
@@ -46,6 +46,6 @@ if [ $rc != 0 ]; then
 	exit $rc
 fi
 
-killall Xvfb
+#killall Xvfb
 
 echo "Done"

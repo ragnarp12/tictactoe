@@ -50,7 +50,7 @@ describe('Eventstore tests', function() {
             user: {
                 userName: 'Ragnar'
             },
-            name: 'MyGame',
+            name: 'TheGame',
             timeStamp: '2014-12-02-T18:23:55'
         }]);
 
@@ -60,7 +60,7 @@ describe('Eventstore tests', function() {
             user: {
                 userName: 'Kiddi'
             },
-            name: 'MyGame2',
+            name: 'TheGame2',
             timeStamp: '2014-12-02-T18:23:55'
         }]);
 
@@ -73,7 +73,7 @@ describe('Eventstore tests', function() {
                 user: {
                     userName: 'Ragnar'
                 },
-                name: 'MyGame',
+                name: 'TheGame',
                 timeStamp: '2014-12-02-T18:23:55'
             }, {
                 id: '2',
@@ -81,7 +81,7 @@ describe('Eventstore tests', function() {
                 user: {
                     userName: 'Kiddi'
                 },
-                name: 'MyGame2',
+                name: 'TheGame2',
                 timeStamp: '2014-12-02-T18:23:55'
             }]);
     });

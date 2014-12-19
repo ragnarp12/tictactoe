@@ -9,7 +9,7 @@ module.exports = function(eventStore, commandHandler) {
             var defer = q.defer();
             eventStore.loadEvents(cmd.id).then(function(eventStream) {
                 var events = commandHandler(eventStream).executeCommand(cmd);
-                console.log(events);
+                //console.log(events);
                 eventStore.storeEvents(cmd.id, events).then(function() {
                     defer.resolve(events);
                 }, function(err) {

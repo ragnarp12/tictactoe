@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Tictactoe game play', function() {
+describe('Tictactoe Draw game', function() {
     var createPage;
     var joinPage;
     beforeEach(function() {
@@ -12,20 +12,20 @@ describe('Tictactoe game play', function() {
     function movePlayer(coord, exp) {
         browser.sleep(500);
         coord.click();
-
+        browser.waitForAngular();
         expect(coord.getText()).toBe(exp);
-        browser.sleep(500);
     }
 
 
-    it('should create game, another joins it and should give X won', function() {
+    it('should create game, another joins it and then game draw', function() {
 
-        createPage.gameName.sendKeys("Prufa2");
+        createPage.gameName.sendKeys("Draw");
         createPage.userName.sendKeys("Jesus");
         createPage.createGameBtn.click();
 
         var tictactoe = require('./tictactoe.po');
 
+        browser.waitForAngular();
         expect(tictactoe.gameboard).toBeDefined();
 
         tictactoe.joinLink.getAttribute('href').then(function(joinHref) {
@@ -37,7 +37,7 @@ describe('Tictactoe game play', function() {
                 browser.switchTo().window(joinerHandle);
                 joinPage.userName.sendKeys('Moses');
                 joinPage.joinGameBtn.click();
-
+                browser.waitForAngular();
 
                 browser.driver.wait(function() {
                     return browser.driver.isElementPresent(by.css('#gameboard')).then(function(el) {
@@ -90,7 +90,9 @@ describe('Tictactoe game play', function() {
                                                         }).then(function() {
 
                                                             movePlayer(tictactoe.x0y2, 'X');
+                                                            browser.waitForAngular();
                                                             browser.sleep(1000);
+
                                                             expect(tictactoe.winner.getText()).toBe('X - Jesus WINS!');
                                                         });
                                                     });
@@ -113,7 +115,7 @@ describe('Tictactoe game play', function() {
 
     it('should create game, another joins it and should give O won', function() {
 
-        createPage.gameName.sendKeys('Prufa3');
+        createPage.gameName.sendKeys('OWin');
         createPage.userName.sendKeys('Salka');
         createPage.createGameBtn.click();
 
@@ -185,14 +187,15 @@ describe('Tictactoe game play', function() {
 
                                                             movePlayer(tictactoe.x2y2, 'X');
 
-                                                            browser.switchTo().window(createHandle).then(function() {
+                                                            browser.switchTo().window(joinerHandle).then(function() {
                                                                 browser.driver.wait(function() {
                                                                     return browser.driver.isElementPresent(by.css('#gameboard')).then(function(el) {
                                                                         return el === true;
                                                                     });
                                                                 }).then(function() {
-                                                                    browser.sleep(500);
+
                                                                     movePlayer(tictactoe.x0y2, 'O');
+                                                                    browser.waitForAngular();
                                                                     browser.sleep(1000);
                                                                     expect(tictactoe.winner.getText()).toBe('O - Valka WINS!');
                                                                 });

@@ -13,6 +13,8 @@ var TictactoePage = function() {
 
     this.opponentname = this.container.element(by.css('#opponentname'));
 
+    this.draw = this.container.element(by.css('.draw'));
+
     this.myname = this.container.element(by.css('#myname'));
 
 

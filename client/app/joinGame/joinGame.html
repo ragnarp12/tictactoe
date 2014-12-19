@@ -9,7 +9,7 @@
 				<input id="userName" class="form-control" name="userName" ng-model="userName"
 				placeholder="Username" tabindex="1" required ng-required="true"
 				ng-maxlength="10">
-				<div class="alert alert-danger" role="alert" ng-show="nameTaken">
+				<div class="alert alert-danger" role="alert" ng-show="nameTaken" id="nameTaken">
 					<a href="#" class="alert-link">Username already taken</a>
 				</div>
 				<div class="alert alert-danger" role="alert" ng-show="joinForm.userName.$error.maxlength">

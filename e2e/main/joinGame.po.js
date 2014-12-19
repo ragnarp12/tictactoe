@@ -6,6 +6,7 @@
 
 var JoinGamePage = function() {
     this.container = element(by.css('#joinContainer'));
+    this.nameTaken = this.container.element(by.css('#nameTaken'));
     this.userName = this.container.element(by.css('#userName'));
     this.joinGameBtn = this.container.element(by.css('#joinGame'));
 };

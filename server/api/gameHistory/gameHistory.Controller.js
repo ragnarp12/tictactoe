@@ -2,17 +2,14 @@
 var _ = require('lodash');
 var app = require('../../app');
 
-// gameHistory
-module.exports = function(eventStore) {
-    return {
-        index: function(req, res) {
-            eventStore.loadEvents(req.params.id).then(function(events) {
-                if(events.length === 0)
-            		res.send(404);
-                res.json(events);
-            }, function(err) {
-                res.json(err);
-            });
-        }
+exports.index = function(req, res) {
+    if (!app.eventStore) {
+        app.eventStore = require('../../eventstore/memorystore')();
     }
-}
+    var resp = app.eventStore.loadEvents(req.params.id);
+    
+    if (resp.length === 0)
+       res.send(404);
+
+    res.json(resp);
+};

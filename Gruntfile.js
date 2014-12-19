@@ -35,7 +35,7 @@ module.exports = function(grunt) {
         },
         express: {
             options: {
-                port: process.env.PORT || 9000
+                port: grunt.option('port') || process.env.PORT || 9000
             },
             dev: {
                 options: {
@@ -71,12 +71,13 @@ module.exports = function(grunt) {
                 tasks: ['injector:css']
             },
             mochaTest: {
-                files: ['server/**/*.js'],
-                tasks: ['env:commit', 'mochaTest']
+                files: ['server/**/*.spec.js'],
+                tasks: ['env:test', 'mochaTest']
             },
             jsTest: {
                 files: [
-                    '<%= yeoman.client %>/{app,components}/**/*.js'
+                    '<%= yeoman.client %>/{app,components}/**/*.spec.js',
+                    '<%= yeoman.client %>/{app,components}/**/*.mock.js'
                 ],
                 tasks: ['karma']
             },
@@ -369,8 +370,7 @@ module.exports = function(grunt) {
                     dest: '<%= yeoman.dist %>',
                     src: [
                         'package.json',
-                        'server/**/*',
-                        'config/*'
+                        'server/**/*'
                     ]
                 }]
             },
@@ -437,18 +437,10 @@ module.exports = function(grunt) {
         },
 
         mochaTest: {
-            test: {
-                options: {
-                    reporter: 'spec'
-                },
-                src: ['server/**/*.spec.js']
+            options: {
+                reporter: 'spec'
             },
-            dbTest: {
-                options: {
-                    reporter: 'spec'
-                },
-                src: ['server/**/*.dbspec.js']
-            }
+            src: ['server/**/*.spec.js']
         },
 
         protractor: {
@@ -465,9 +457,6 @@ module.exports = function(grunt) {
         },
 
         env: {
-            commit: {
-                NODE_ENV: 'commit'
-            },
             test: {
                 NODE_ENV: 'test'
             },
@@ -490,7 +479,7 @@ module.exports = function(grunt) {
                 files: {
                     '.tmp/app/app.css': '<%= yeoman.client %>/app/app.less'
                 }
-            }
+            },
         },
 
         injector: {
@@ -555,7 +544,7 @@ module.exports = function(grunt) {
                     ]
                 }
             }
-        }
+        },
     });
 
     // Used for delaying livereload until after server has restarted
@@ -616,14 +605,8 @@ module.exports = function(grunt) {
         if (target === 'server') {
             return grunt.task.run([
                 'env:all',
-                'env:commit',
-                'mochaTest:test'
-            ]);
-        } else if (target === 'serverdb') {
-            return grunt.task.run([
-                'env:all',
                 'env:test',
-                'mochaTest:dbTest'
+                'mochaTest'
             ]);
         } else if (target === 'client') {
             return grunt.task.run([

@@ -14,24 +14,18 @@ var config = require('./config/environment');
 var app = express();
 var server = require('http').createServer(app);
 require('./config/express')(app);
-require('./routes')(app, config);
-var mongoose = require('mongoose');
-
-// Connect to database
-console.log("Connecting to mongoDb ", config.mongo.uri, config.mongo.options);
-mongoose.connect(config.mongo.uri, config.mongo.options, function(err) {
-    console.debug("connect callback", arguments);
-});
-
-// Populate DB with sample data
-if (config.seedDB) {
-    require('./config/seed');
-}
+require('./routes')(app);
 
 // Start server
 server.listen(config.port, config.ip, function() {
     console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
 });
+process.on('uncaughtException', function(err) {
+    console.log(err);
+});
+app.eventStore = require('./eventstore/memorystore')();
+
+console.debug("App instantiated");
 
 app.appName = "TicTacToe";
 

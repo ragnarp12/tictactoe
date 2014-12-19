@@ -1,108 +1,45 @@
 var should = require('should');
 var _ = require('lodash');
-var q = require('q');
 
+describe('Testing tictactoe context using stubing method.', function() {
+    it('should excecute command within the tictactoe implementation with events from the store and store generated events.', function() {
 
-function resolvedPromise(value) {
-    var defer = q.defer();
-    defer.resolve(value);
-    return defer.promise;
-}
+        var eventStoreId;
+        var myEvents;
 
-
-describe('tictactoe game context', function() {
-
-    it('should route command to instantiated tictactoe game with event stream from store and return and store generated events. Test using stubs.', function(done) {
-
-        var calledWithEventStoreId;
-        var storedEvents;
-        var eventStoreStub = {
-            loadEvents: function(aggregateId) {
-                calledWithEventStoreId = aggregateId;
-                return resolvedPromise([]);
+        var stubStore = {
+            loadEvents: function(id) {
+                eventStoreId = id;
+                return [];
             },
-            storeEvents: function(aggregateId, events) {
-                storedEvents = events;
-                return resolvedPromise(events);
+            storeEvents: function(id, events) {
+                myEvents = events;
             }
         };
 
-        var executedCommand = {};
+        var myCommand = {};
 
         var tictactoe = function(history) {
             return {
                 executeCommand: function(cmd) {
-                    executedCommand = cmd;
+                    myCommand = cmd;
                     return [];
                 }
             }
         };
 
-        var commandHandlers = tictactoe;
-        var boundedContext = require('./tictactoeBoundedContext')(eventStoreStub, commandHandlers);
+        var handlers = tictactoe;
+        var boundedContext = require('./tictactoeBoundedContext')(stubStore, handlers);
 
-        var emptyCommand = {
-            id: "111"
+        var givenCommand = {
+            id: '19919'
         };
 
-        var events;
-        boundedContext.handleCommand(emptyCommand).then(function(ev) {
-            events = ev;
-            should(executedCommand.id).be.exactly("111");
-            should(calledWithEventStoreId).be.exactly("111");
-            should(events.length).be.exactly(0);
-            should(storedEvents).be.exactly(events);
-            done();
-        });
+        var events = boundedContext.handleCommand(givenCommand);
 
+        should(myCommand.id).be.exactly('19919');
+        should(eventStoreId).be.exactly('19919');
+        should(events.length).be.exactly(0);
+        should(myEvents).eql(events);
     });
-
-
-    it('should route command to instantiated tictactoe game with event stream from store and return generated events, using mock style tests.', function(done) {
-
-        var jm = require('jsmockito').JsMockito;
-        jm.Integration.importTo(global);
-        /* global spy,when */
-
-        var mockStore = spy({
-            loadEvents: function() {
-                return resolvedPromise([]);
-            },
-            storeEvents: function(events) {
-                return resolvedPromise(events);
-            }
-        });
-
-
-        var mockTickTackToe = spy({
-            executeCommand: function() {
-                return resolvedPromise([]);
-
-            }
-        });
-
-
-        var commandHandlers = function() {
-            return mockTickTackToe
-        };
-        var boundedContext = require('./tictactoeBoundedContext')(mockStore, commandHandlers);
-
-        var emptyCommand = {
-            id: "111"
-        };
-
-        boundedContext.handleCommand(emptyCommand).then(function() {
-
-            jm.verify(mockStore).loadEvents('111');
-            jm.verify(mockStore).storeEvents('111');
-
-            jm.verify(mockTickTackToe).executeCommand(emptyCommand);
-
-            done();
-        });
-
-
-    });
-
-
 });

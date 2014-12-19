@@ -1,22 +1,13 @@
-'use strict';
-
-var _ = require('lodash');
-var q = require('q');
+var _ = require('lodash')
 
 module.exports = function(eventStore, commandHandler) {
     return {
         handleCommand: function(cmd) {
-            var defer = q.defer();
-            eventStore.loadEvents(cmd.id).then(function(eventStream) {
-                var events = commandHandler(eventStream).executeCommand(cmd);
-                //console.log(events);
-                eventStore.storeEvents(cmd.id, events).then(function() {
-                    defer.resolve(events);
-                }, function(err) {
-                    defer.reject(err);
-                });
-            });
-            return defer.promise;
+            var eventStream = eventStore.loadEvents(cmd.id);
+            var events = commandHandler(eventStream).executeCommand(cmd);
+            eventStore.storeEvents(cmd.id, events);
+            
+            return events;
         }
     }
 }
